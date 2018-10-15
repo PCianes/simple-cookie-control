@@ -62,9 +62,10 @@ class Simple_Cookie_Control_Admin {
 	 */
 	private function load_dependencies() {
 		/**
-		 * The class responsible for ...
+		 * The class responsible for Customizer
 		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-simple-cookie-control-class-name.php'; .
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-simple-cookie-control-customizer.php';
+
 	}
 
 	/**
