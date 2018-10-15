@@ -12,8 +12,8 @@
  * @package           Simple_Cookie_Control
  *
  * @wordpress-plugin
- * Plugin Name:       Simple_Cookie_Control
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Plugin Name:       Simple Cookie Control
+ * Description:       Inform users that your site uses cookies and blocks them until the visitor accepts.
  * Version:           1.0.0
  * Author:            SumaPress
  * Author URI:        https://sumapress.com
