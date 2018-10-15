@@ -86,7 +86,8 @@ class Simple_Cookie_Control_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-public.min.css', array(), $this->version, 'all' );
+		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-public.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cookieconsent.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -109,7 +110,8 @@ class Simple_Cookie_Control_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-public.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'cookieconsent', plugin_dir_url( __FILE__ ) . 'js/cookieconsent.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-public.js', array( 'cookieconsent', 'jquery' ), $this->version, false );
 
 	}
 
