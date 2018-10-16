@@ -30,6 +30,23 @@ class Simple_Cookie_Control_Activator {
 	 */
 	public static function activate() {
 
+		$default_options = array(
+			'position'					=> 'bottom',
+			'theme'						=> 'block',
+			'colors'					=> 1,
+			'popupBackgroundColor'		=> '#000000',
+			'popupTextColor'			=> '#ffffff',
+			'popupLinkColor'			=> '#ffffff',
+			'buttonBackgroundColor'		=> 'transparent',
+			'buttonTextColor'			=> '#ffffff',
+			'buttonBorderColor'			=> '#ffffff',
+			'highlightBackgroundColor'	=> 'transparent',
+			'highlightTextColor'		=> '#ffffff',
+			'highlightBorderColor'		=> 'transparent',
+		);
+
+		add_option( 'customizer_simple_cookie_control', $default_options );
+
 	}
 
 }

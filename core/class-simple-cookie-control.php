@@ -173,12 +173,10 @@ class Simple_Cookie_Control {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Simple_Cookie_Control_Admin( $this->get_plugin_name(), $this->get_version() );
-
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		$customizer = new Simple_Cookie_Control_Customizer( $this->get_plugin_name(), $this->get_version() );
-
 		$this->loader->add_action( 'customize_register', $customizer, 'register_customizer_cookie_banner' );
 	}
 

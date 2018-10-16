@@ -87,7 +87,7 @@ class Simple_Cookie_Control_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-admin.min.css', array(), $this->version, 'all' );
+		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-admin.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -110,7 +110,7 @@ class Simple_Cookie_Control_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-admin.min.js', array( 'jquery' ), $this->version, false );
+		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-admin.min.js', array( 'jquery' ), $this->version, false );
 
 	}
 

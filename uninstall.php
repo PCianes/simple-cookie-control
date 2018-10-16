@@ -28,3 +28,6 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+
+delete_option( 'customizer_simple_cookie_control' );
