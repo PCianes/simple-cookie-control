@@ -115,6 +115,26 @@ class Simple_Cookie_Control_Customizer {
 	}
 
 	/**
+	 * Register the JavaScript only for the customizer preview.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_scripts_preview_init() {
+
+		wp_enqueue_script( $this->plugin_name . '-customizer-preview', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-preview.js', array( 'jquery', 'customize-preview' ), $this->version, true );
+	}
+
+	/**
+	 * Register the JavaScript only for the customizer controls.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_scripts_controls() {
+
+		wp_enqueue_script( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-controls.js', array( 'jquery'), $this->version, true );
+	}
+
+	/**
 	 * Customizer control to config custom cookie banner
 	 *
 	 * @since    1.0.0
@@ -175,7 +195,8 @@ class Simple_Cookie_Control_Customizer {
 			array(
 				'type'       => 'option',
 				'capability' => 'manage_options',
-				'default'	=> 'bottom'
+				'default'	=> 'bottom',
+				'transport'=>'postMessage'
 			)
 		);
 		$wp_customize->add_control(
@@ -203,7 +224,8 @@ class Simple_Cookie_Control_Customizer {
 			array(
 				'type'       => 'option',
 				'capability' => 'manage_options',
-				'default'	=> 'block'
+				'default'	=> 'block',
+				'transport'=>'postMessage'
 			)
 		);
 		$wp_customize->add_control(
@@ -231,7 +253,7 @@ class Simple_Cookie_Control_Customizer {
 				'type'       => 'option',
 				'capability' => 'manage_options',
 				'default'	=> 1,
-				'sanitize_callback' => $this->sanitize_checkbox,
+				'sanitize_callback' => array( $this, 'sanitize_checkbox'),
 			)
 		);
 		$wp_customize->add_control(
@@ -254,6 +276,7 @@ class Simple_Cookie_Control_Customizer {
 						'capability' => 'manage_options',
 						'default'	=> $data['default'],
 						'sanitize_callback' => 'sanitize_hex_color',
+						//'transport'=>'postMessage'
 					)
 				);
 				$wp_customize->add_control( 
@@ -264,9 +287,6 @@ class Simple_Cookie_Control_Customizer {
 							'label'      => esc_html__( $data['text'], 'simple-cookie-control' ),
 							'section'    => $section,
 							'settings'   => 'customizer_simple_cookie_control['. $data['key'] .']',
-							'input_attrs' => array(
-								'class'	=> 'coloooor',
-							),
 						) 
 					) 
 				);

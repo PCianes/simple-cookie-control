@@ -177,6 +177,8 @@ class Simple_Cookie_Control {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		$customizer = new Simple_Cookie_Control_Customizer( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'customize_preview_init', $customizer, 'enqueue_scripts_preview_init' );
+		$this->loader->add_action( 'customize_controls_enqueue_scripts', $customizer, 'enqueue_scripts_controls' );
 		$this->loader->add_action( 'customize_register', $customizer, 'register_customizer_cookie_banner' );
 	}
 
