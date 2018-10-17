@@ -43,6 +43,14 @@ class Simple_Cookie_Control_Activator {
 			'highlightBackgroundColor'	=> 'transparent',
 			'highlightTextColor'		=> '#ffffff',
 			'highlightBorderColor'		=> 'transparent',
+			'contentMessage'			=> 'This website uses cookies to ensure you get the best experience on our website.',
+			'contentAllow'				=> 'Allow cookies',
+			'contentDeny'				=> 'Decline',
+			'contentLink'				=> 'Learn more',
+			'contentHref'				=> 'https://cookiesandyou.com',
+			'contentPolicy'				=> '<span class="dashicons dashicons-image-filter"></span>',
+			'contentRevokable'			=> true,
+			'contentAnimateRevokable'	=> false,
 		);
 
 		add_option( 'customizer_simple_cookie_control', $default_options );

@@ -1,6 +1,5 @@
 (function( $ ) {
 	'use strict';
-
 	let palette = ! customizerCookieOptions.colors ? null : {
 		'popup': {
 			'background': customizerCookieOptions.popupBackgroundColor,
@@ -26,17 +25,27 @@
 				{
 					'position': customizerCookieOptions.position,
 					'theme': customizerCookieOptions.theme,
-					//'container': document.getElementById( 'content' ),
 					'palette': palette,
 					'content': {
-						'message': 'message',
-						'dismiss': 'Ok!',
-						'link': 'link',
+						'message': customizerCookieOptions.contentMessage,
+						'dismiss': customizerCookieOptions.contentDeny,
+						'allow'	: customizerCookieOptions.contentAllow,
+						'deny'	: customizerCookieOptions.contentDeny,
+						'link'	: customizerCookieOptions.contentLink,
+						'href': customizerCookieOptions.contentHref,
+						'policy': customizerCookieOptions.contentPolicy, 
 					},
-					"type": "opt-out"
+					'type': 'opt-in',
+					'revokable' : customizerCookieOptions.contentRevokable,
+					'animateRevokable' : customizerCookieOptions.contentAnimateRevokable,
 				}
-			)
+			);
 
+			let banner = $("[aria-describedby*='cookieconsent:desc']");
+			$( ".cc-revoke" ).click(function() {
+				banner.removeClass('cc-invisible').removeAttr('style');
+				$(this).css('display','none');
+			});
 		}
 	);
 

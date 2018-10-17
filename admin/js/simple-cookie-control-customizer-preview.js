@@ -107,6 +107,38 @@
 				} );
 			} );
 
+			wp.customize( 'customizer_simple_cookie_control[contentMessage]', function( value ) {
+				value.bind( function( newValue ) {
+					let currentMessage = $('.cc-message'),
+						anchorHtml = currentMessage.html().slice( currentMessage.html().indexOf('<a aria-label="learn more about cookies"') );
+					currentMessage.html( newValue + anchorHtml );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[contentLink]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-message a.cc-link').text( newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[contentHref]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-message a.cc-link').attr( 'href', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[contentAllow]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-allow').text( newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[contentDeny]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-deny').text( newValue );
+				} );
+			} );
+
 	});
 
 })( jQuery );

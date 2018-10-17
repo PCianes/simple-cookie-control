@@ -153,17 +153,7 @@ class Simple_Cookie_Control_Customizer {
 		);
 
 		$this->add_cookies_styles_section( $wp_customize );
-
-		// Segunda Seccion
-		$wp_customize->add_section(
-			'scc_layout',
-			array(
-				'title'      => __( 'Segunda Seccion', 'simple-cookie-control' ),
-				'panel'      => $this->plugin_name,
-				'priority'   => 2,
-				'capability' => 'manage_options',
-			)
-		);
+		$this->add_cookies_content_section( $wp_customize );
 
 	}
 
@@ -202,7 +192,6 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_control(
 			'customizer_simple_cookie_control[position]',
 			array(
-				'label'    		=> esc_html__( 'Position', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'Set the position of the cookie banner', 'simple-cookie-control' ),
 				'section'  		=> $section,
 				'priority' 		=> 1,
@@ -233,7 +222,6 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_control(
 			'customizer_simple_cookie_control[theme]',
 			array(
-				'label'    		=> esc_html__( 'Style', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'Set the style of the cookie banner', 'simple-cookie-control' ),
 				'section'  		=> $section,
 				'priority' 		=> 2,
@@ -261,8 +249,7 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_control(
 			'customizer_simple_cookie_control[colors]',
 			array(
-				'label'    		=> esc_html__( 'Colors', 'simple-cookie-control' ),
-				'description'	=> esc_html__( 'Check to change colors here or uncheck to defined them in CSS.', 'simple-cookie-control' ),
+				'label'			=> esc_html__( 'Check to change colors here or uncheck to defined them in CSS.', 'simple-cookie-control' ),
 				'section'  		=> $section,
 				'priority' 		=> 3,
 				'type'     		=> 'checkbox',
@@ -294,6 +281,135 @@ class Simple_Cookie_Control_Customizer {
 				);
 			}	
 		}		
+
+	}
+
+	/**
+	 * Customizer control to Second section: contents of the banner
+	 *
+	 * @since    1.0.0
+	 * @param      object $wp_customize       Object from WP Customize Manager
+	 */
+	public function add_cookies_content_section( $wp_customize ) {
+
+		$section = 'scc_content';
+		
+		$wp_customize->add_section(
+			$section,
+			array(
+				'title'      => __( 'Contents of the banner', 'simple-cookie-control' ),
+				'panel'      => $this->plugin_name,
+				'priority'   => 2,
+				'capability' => 'manage_options',
+			)
+		);
+
+		/**
+		 * Add option to set the 'MAIN MESSAGE'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[contentMessage]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 'This website uses cookies to ensure you get the best experience on our website.',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'=>'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[contentMessage]',
+			array(
+				'label'    		=> esc_html__( 'Main Message', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 1,
+				'type'     		=> 'textarea',
+			)
+		);
+
+		/**
+		 * Add option to set the 'LINK'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[contentLink]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 'Learn more',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'=>'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[contentLink]',
+			array(
+				'label'    		=> esc_html__( 'Link text', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 2,
+				'type'     		=> 'text',
+			)
+		);
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[contentHref]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 'https://cookiesandyou.com',
+				'sanitize_callback' => 'esc_url_raw',
+				'transport'=>'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[contentHref]',
+			array(
+				'label'    		=> esc_html__( 'Link href', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 2,
+				'type'     		=> 'url',
+			)
+		);
+
+		/**
+		 * Add option to set the 'BUTTONS'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[contentAllow]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 'Allow cookies',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'=>'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[contentAllow]',
+			array(
+				'label'    		=> esc_html__( 'Main Button', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 4,
+				'type'     		=> 'text',
+			)
+		);
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[contentDeny]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 'Decline',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'=>'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[contentDeny]',
+			array(
+				'label'    		=> esc_html__( 'Secondary Button', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 5,
+				'type'     		=> 'text',
+			)
+		);
 
 	}
 
