@@ -21,6 +21,12 @@
 						case 'bottom-right':
 							banner.removeClass('cc-left cc-banner cc-top').addClass('cc-bottom cc-right cc-floating');
 							break;
+						case 'top-left':
+							banner.removeClass('cc-right cc-banner cc-bottom').addClass('cc-top cc-left cc-floating');
+							break;
+						case 'top-right':
+							banner.removeClass('cc-left cc-banner cc-bottom').addClass('cc-top cc-right cc-floating');
+							break;
 					
 						default:
 							break;
@@ -44,6 +50,60 @@
 						default:
 							break;
 					}
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[popupBackgroundColor]', function( value ) {
+				value.bind( function( newValue ) {
+					banner.css('background-color', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[popupTextColor]', function( value ) {
+				value.bind( function( newValue ) {
+					banner.css('color', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[popupLinkColor]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-message a').css('color', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[buttonBackgroundColor]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-compliance .cc-allow').css('background-color', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[buttonTextColor]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-compliance .cc-allow').css('color', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[buttonBorderColor]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-compliance .cc-allow').css('border-color', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[highlightBackgroundColor]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-compliance .cc-deny').css('background-color', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[highlightTextColor]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-compliance .cc-deny').css('color', newValue );
+				} );
+			} );
+
+			wp.customize( 'customizer_simple_cookie_control[highlightBorderColor]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-compliance .cc-deny').css('border-color', newValue );
 				} );
 			} );
 

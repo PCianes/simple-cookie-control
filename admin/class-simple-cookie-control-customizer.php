@@ -63,12 +63,12 @@ class Simple_Cookie_Control_Customizer {
 				array( 
 					'key'		=> 'popupBackgroundColor',
 					'text'		=> esc_html__( 'Main Background Color', 'simple-cookie-control' ),
-					'default'	=> '#000000'
+					'default'	=> '#edeff5'
 				),
 				array( 
 					'key'		=> 'popupTextColor',
 					'text'		=> esc_html__( 'Main Text Color', 'simple-cookie-control' ),
-					'default'	=> '#ffffff'
+					'default'	=> '#838391'
 				),
 				array( 
 					'key'		=> 'popupLinkColor',
@@ -80,7 +80,7 @@ class Simple_Cookie_Control_Customizer {
 				array( 
 					'key'		=> 'buttonBackgroundColor',
 					'text'		=> esc_html__( 'Button Background Color', 'simple-cookie-control' ),
-					'default'	=> 'transparent'
+					'default'	=> '#4b81e8'
 				),
 				array( 
 					'key'		=> 'buttonTextColor',
@@ -209,9 +209,11 @@ class Simple_Cookie_Control_Customizer {
 				'type'     		=> 'select',
 				'choices'		=> array(
 					'bottom'		=> esc_html__( 'Banner bottom', 'simple-cookie-control' ),
+					'bottom-left'	=> esc_html__( 'Bottom - Floating left', 'simple-cookie-control' ),
+					'bottom-right'	=> esc_html__( 'Bottom - Floating right', 'simple-cookie-control' ),
 					'top'			=> esc_html__( 'Banner top', 'simple-cookie-control' ),
-					'bottom-left'	=> esc_html__( 'Floating left', 'simple-cookie-control' ),
-					'bottom-right'	=> esc_html__( 'Floating right', 'simple-cookie-control' ),
+					'top-left'		=> esc_html__( 'Top - Floating left', 'simple-cookie-control' ),
+					'top-right'		=> esc_html__( 'Top - Floating right', 'simple-cookie-control' ),
 				),
 			)
 		);
@@ -276,7 +278,7 @@ class Simple_Cookie_Control_Customizer {
 						'capability' => 'manage_options',
 						'default'	=> $data['default'],
 						'sanitize_callback' => 'sanitize_hex_color',
-						//'transport'=>'postMessage'
+						'transport'=>'postMessage'
 					)
 				);
 				$wp_customize->add_control( 
