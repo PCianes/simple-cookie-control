@@ -139,6 +139,12 @@
 				} );
 			} );
 
+			wp.customize( 'customizer_simple_cookie_control[contentPolicy]', function( value ) {
+				value.bind( function( newValue ) {
+					$('.cc-revoke').html( newValue );
+				} );
+			} );
+
 	});
 
 })( jQuery );

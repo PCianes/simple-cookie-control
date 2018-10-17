@@ -37,7 +37,7 @@
 					},
 					'type': 'opt-in',
 					'revokable' : customizerCookieOptions.contentRevokable,
-					'animateRevokable' : customizerCookieOptions.contentAnimateRevokable,
+					'animateRevokable' : false,
 				}
 			);
 

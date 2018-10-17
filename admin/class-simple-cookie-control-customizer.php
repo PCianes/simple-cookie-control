@@ -154,6 +154,7 @@ class Simple_Cookie_Control_Customizer {
 
 		$this->add_cookies_styles_section( $wp_customize );
 		$this->add_cookies_content_section( $wp_customize );
+		$this->add_cookies_secondary_section( $wp_customize );
 
 	}
 
@@ -362,9 +363,9 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_control(
 			'customizer_simple_cookie_control[contentHref]',
 			array(
-				'label'    		=> esc_html__( 'Link href', 'simple-cookie-control' ),
+				'label'    		=> esc_html__( 'Link href (internal or external)', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 2,
+				'priority' 		=> 3,
 				'type'     		=> 'url',
 			)
 		);
@@ -411,6 +412,71 @@ class Simple_Cookie_Control_Customizer {
 			)
 		);
 
+	}
+
+	/**
+	 * Customizer control to Third section: secondary banner
+	 *
+	 * @since    1.0.0
+	 * @param      object $wp_customize       Object from WP Customize Manager
+	 */
+	public function add_cookies_secondary_section( $wp_customize ) {
+
+		$section = 'scc_secondary';
+		
+		$wp_customize->add_section(
+			$section,
+			array(
+				'title'      => __( 'Secondary banner', 'simple-cookie-control' ),
+				'panel'      => $this->plugin_name,
+				'priority'   => 3,
+				'capability' => 'manage_options',
+			)
+		);
+
+		/**
+		 * Add options to set the 'SECONDARY BANNER'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[contentRevokable]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 1,
+				'sanitize_callback' => array( $this, 'sanitize_checkbox'),
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[contentRevokable]',
+			array(
+				'label'			=> esc_html__( 'Show or not the secondary banner after the primary one is hidden.', 'simple-cookie-control' ),
+				'description'	=> esc_html__( 'The secondary banner allow users see again the main banner to change their previous decision.', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 1,
+				'type'     		=> 'checkbox',
+			)
+		);
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[contentPolicy]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> '<span class="dashicons dashicons-image-filter"></span>',
+				'sanitize_callback' => 'wp_kses_post',
+				'transport'=>'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[contentPolicy]',
+			array(
+				'label'    		=> esc_html__( 'The content of the secondary banner', 'simple-cookie-control' ),
+				'description'	=> esc_html__( 'Put only text or even html like: "<span class="dashicons dashicons-image-filter"></span>" or an img tag.', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 2,
+				'type'     		=> 'text',
+			)
+		);
+	
 	}
 
 	/**

@@ -50,7 +50,6 @@ class Simple_Cookie_Control_Activator {
 			'contentHref'				=> 'https://cookiesandyou.com',
 			'contentPolicy'				=> '<span class="dashicons dashicons-image-filter"></span>',
 			'contentRevokable'			=> true,
-			'contentAnimateRevokable'	=> false,
 		);
 
 		add_option( 'customizer_simple_cookie_control', $default_options );
