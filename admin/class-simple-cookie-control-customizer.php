@@ -155,6 +155,7 @@ class Simple_Cookie_Control_Customizer {
 		$this->add_cookies_styles_section( $wp_customize );
 		$this->add_cookies_content_section( $wp_customize );
 		$this->add_cookies_secondary_section( $wp_customize );
+		$this->add_cookies_control_section( $wp_customize );
 
 	}
 
@@ -449,7 +450,7 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_control(
 			'customizer_simple_cookie_control[contentRevokable]',
 			array(
-				'label'			=> esc_html__( 'Show or not the secondary banner after the primary one is hidden.', 'simple-cookie-control' ),
+				'label'			=> esc_html__( 'Show or not the secondary banner after the primary one is hidden', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'The secondary banner allow users see again the main banner to change their previous decision.', 'simple-cookie-control' ),
 				'section'  		=> $section,
 				'priority' 		=> 1,
@@ -477,6 +478,71 @@ class Simple_Cookie_Control_Customizer {
 			)
 		);
 	
+	}
+
+	/**
+	 * Customizer control to Quarter section: cookie control
+	 *
+	 * @since    1.0.0
+	 * @param      object $wp_customize       Object from WP Customize Manager
+	 */
+	public function add_cookies_control_section( $wp_customize ) {
+
+		$section = 'scc_control';
+		
+		$wp_customize->add_section(
+			$section,
+			array(
+				'title'      => __( 'Cookie control', 'simple-cookie-control' ),
+				'panel'      => $this->plugin_name,
+				'priority'   => 4,
+				'capability' => 'manage_options',
+			)
+		);
+
+		/**
+		 * Add options to set the 'Cookie control'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[cookieName]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 'SimpleCookieControl',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[cookieName]',
+			array(
+				'label'			=> esc_html__( 'Cookie name', 'simple-cookie-control' ),
+				'description'	=> esc_html__( 'Name of the cookie that keeps track of users choice.', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 1,
+				'type'     		=> 'text',
+			)
+		);
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[cookieDays]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 180,
+				'sanitize_callback' => 'absint',
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[cookieDays]',
+			array(
+				'label'			=> esc_html__( 'Days to expiry', 'simple-cookie-control' ),
+				'description'	=> esc_html__( 'The cookies expire date, specified in days.', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 2,
+				'type'     		=> 'number',
+			)
+		);
+		
+
 	}
 
 	/**

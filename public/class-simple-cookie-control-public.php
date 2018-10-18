@@ -88,7 +88,7 @@ class Simple_Cookie_Control_Public {
 
 		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-public.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cookieconsent.min.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style( 'dashicons' );
 	}
 
 	/**
