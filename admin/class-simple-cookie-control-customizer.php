@@ -439,25 +439,6 @@ class Simple_Cookie_Control_Customizer {
 		 * Add options to set the 'SECONDARY BANNER'
 		 */
 		$wp_customize->add_setting(
-			'customizer_simple_cookie_control[contentRevokable]',
-			array(
-				'type'       => 'option',
-				'capability' => 'manage_options',
-				'default'	=> 1,
-				'sanitize_callback' => array( $this, 'sanitize_checkbox'),
-			)
-		);
-		$wp_customize->add_control(
-			'customizer_simple_cookie_control[contentRevokable]',
-			array(
-				'label'			=> esc_html__( 'Show or not the secondary banner after the primary one is hidden', 'simple-cookie-control' ),
-				'description'	=> esc_html__( 'The secondary banner allow users see again the main banner to change their previous decision.', 'simple-cookie-control' ),
-				'section'  		=> $section,
-				'priority' 		=> 1,
-				'type'     		=> 'checkbox',
-			)
-		);
-		$wp_customize->add_setting(
 			'customizer_simple_cookie_control[contentPolicy]',
 			array(
 				'type'       => 'option',
@@ -473,8 +454,27 @@ class Simple_Cookie_Control_Customizer {
 				'label'    		=> esc_html__( 'The content of the secondary banner', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'Put only text or even html like: "<span class="dashicons dashicons-image-filter"></span>" or an img tag.', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 2,
+				'priority' 		=> 1,
 				'type'     		=> 'text',
+			)
+		);
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[contentRevokable]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 1,
+				'sanitize_callback' => array( $this, 'sanitize_checkbox'),
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[contentRevokable]',
+			array(
+				'label'			=> esc_html__( 'Show or not the secondary banner after the primary one is hidden', 'simple-cookie-control' ),
+				'description'	=> esc_html__( 'The secondary banner allow users see again the main banner to change their previous decision.', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 2,
+				'type'     		=> 'checkbox',
 			)
 		);
 	
@@ -493,7 +493,7 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_section(
 			$section,
 			array(
-				'title'      => __( 'Cookie control', 'simple-cookie-control' ),
+				'title'      => __( 'Analytics & Cookie control', 'simple-cookie-control' ),
 				'panel'      => $this->plugin_name,
 				'priority'   => 4,
 				'capability' => 'manage_options',
@@ -541,7 +541,52 @@ class Simple_Cookie_Control_Customizer {
 				'type'     		=> 'number',
 			)
 		);
-		
+
+		/**
+		 * Add options to set the 'GTM-XXXX of Google Tag Manager'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[googleManagerID]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 'GTM-XXXX',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[googleManagerID]',
+			array(
+				'label'			=> esc_html__( 'Google Tag Manager ID', 'simple-cookie-control' ),
+				'description'	=> esc_html__( 'Set your ID of Google Tag Manager to insert your own analytics scripts.', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 3,
+				'type'     		=> 'text',
+			)
+		);
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[googleManager]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 'stop',
+				'sanitize_callback' => array( $this, 'sanitize_radio'),
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[googleManager]',
+			array(
+				'label'			=> esc_html__( 'Activate or not the implementation of Google Tag Manager', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 4,
+				'type'     		=> 'radio',
+				'choices'		=> array(
+					'stop'			=> esc_html__('Do not activate it never', 'simple-cookie-control' ),
+					'conditional'	=> esc_html__('Conditional on the acceptance of cookies', 'simple-cookie-control' ),
+					'always'		=> esc_html__('Always activated', 'simple-cookie-control' ),
+				),
+			)
+		);
 
 	}
 
@@ -553,6 +598,24 @@ class Simple_Cookie_Control_Customizer {
 	 */
 	public function sanitize_checkbox( $checked ) {
 		return ( ( isset( $checked ) && true == $checked ) ? true : false );
+	}
+
+	/**
+	 * Sanitize radio
+	 *
+	 * @since    1.0.0
+	 * @param      string $input      Value of selection
+	 * @param      string $etting      Values of settings
+	 */
+	public function sanitize_radio( $input, $setting ) {
+		// Ensure input is a slug.
+		$input = sanitize_key( $input );
+
+		// Get list of choices from the control associated with the setting.
+		$choices = $setting->manager->get_control( $setting->id )->choices;
+	  
+		// If the input is a valid key, return it; otherwise, return the default.
+		return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
 	}
 
 }

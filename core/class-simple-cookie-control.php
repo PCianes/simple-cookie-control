@@ -175,6 +175,7 @@ class Simple_Cookie_Control {
 		$plugin_admin = new Simple_Cookie_Control_Admin( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_filter( 'plugin_action_links_simple-cookie-control/simple-cookie-control.php', $plugin_admin, 'settings_link_on_plugins_table' );
 
 		$customizer = new Simple_Cookie_Control_Customizer( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'customize_preview_init', $customizer, 'enqueue_scripts_preview_init' );
@@ -199,6 +200,14 @@ class Simple_Cookie_Control {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		$plugin_options = get_option( 'customizer_simple_cookie_control' );
+
+		if( 'always' === $plugin_options['googleManager'] || ( 'conditional' === $plugin_options['googleManager'] && 'allow' === $_COOKIE[ $plugin_options['cookieName'] ] ) ) {
+			$this->loader->add_action( 'wp_head', $plugin_public, 'enqueue_head_google_scripts', 1 );
+			$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_body_google_scripts', 1 );
+		}
+		
 	}
 
 	/**

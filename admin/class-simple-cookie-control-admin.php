@@ -113,4 +113,17 @@ class Simple_Cookie_Control_Admin {
 		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-admin.min.js', array( 'jquery' ), $this->version, false );
 	}
 
+	/**
+	 * Add setting link to customizer on plugins table
+	 *
+	 * @since    1.0.0
+	 * @param      array $links      Array with links of the plugin
+	 */
+	public function settings_link_on_plugins_table( $links ) {
+		
+		array_unshift( $links, '<a href="customize.php">' . __( 'Go to customizer', 'simple-cookie-control' ) . '</a>' );
+		return $links;
+
+	}
+
 }

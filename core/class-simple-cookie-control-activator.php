@@ -52,6 +52,8 @@ class Simple_Cookie_Control_Activator {
 			'contentRevokable'			=> true,
 			'cookieName'				=> 'SimpleCookieControl',
 			'cookieDays'				=> 180,
+			'googleManager'				=> 'stop',
+			'googleManagerID'			=> 'GTM-XXXX',
 		);
 
 		add_option( 'customizer_simple_cookie_control', $default_options );
