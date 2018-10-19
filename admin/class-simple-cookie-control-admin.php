@@ -126,4 +126,66 @@ class Simple_Cookie_Control_Admin {
 
 	}
 
+
+	/**
+	 * Add new input into database about the choice of the user in relation to allow or not the cookies
+	 * Action from Ajax by simple-cookie-control-public.js
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_user_choice_into_db(){
+
+		check_ajax_referer( 'simple_cookie_control_nonce_customizer', 'security' );
+
+		$choice = ! empty( $_POST['choice'] ) ? $_POST['choice'] : false;
+
+		if ( $choice ) {
+			$current_analytics = get_option( 'analytics_simple_cookie_control' );
+			switch ( $choice ) {
+				case 'allow':
+					$current_analytics['allow'] = $current_analytics['allow'] + 1;
+				break;
+				
+				case 'deny':
+					$current_analytics['deny'] = $current_analytics['deny'] + 1;
+				break;
+				
+				default:
+				break;
+			}
+			update_option( 'analytics_simple_cookie_control', $current_analytics );
+		}
+
+		header( 'Content-type: application/json' );
+		echo json_encode( true );
+		die;
+		
+	}
+
+	/**
+	 * Reset counters and date of internal cookies analytics which show into customizer
+	 * Action from Ajax by simple-cookie-control-customizer-controls.js
+	 *
+	 * @since    1.0.0
+	 */
+	public function reset_cookies_analytics(){
+
+		check_ajax_referer( 'simple_cookie_control_nonce_analytics', 'security' );
+
+		if ( ! empty( $_POST['reset'] ) && $_POST['reset'] ) {
+			$start_internal_analytics = array(
+				'since' 	=> date_i18n( get_option('date_format') ), 
+				'allow' 	=> 0, 
+				'deny' 		=> 0,
+				'ajaxUrl'	=> admin_url('admin-ajax.php'),
+				'security'	=> wp_create_nonce( 'simple_cookie_control_nonce_analytics' ),
+			);
+			update_option( 'analytics_simple_cookie_control', $start_internal_analytics );
+		}
+
+		header( 'Content-type: application/json' );
+		echo json_encode( true );
+		die;
+	}
+
 }

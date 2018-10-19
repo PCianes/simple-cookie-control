@@ -176,11 +176,17 @@ class Simple_Cookie_Control {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_filter( 'plugin_action_links_simple-cookie-control/simple-cookie-control.php', $plugin_admin, 'settings_link_on_plugins_table' );
+		$this->loader->add_filter( 'wp_ajax_save_user_choice', $plugin_admin, 'add_user_choice_into_db' );
+		$this->loader->add_filter( 'wp_ajax_nopriv_save_user_choice', $plugin_admin, 'add_user_choice_into_db' );
+		$this->loader->add_filter( 'wp_ajax_reset_cookies_analytics', $plugin_admin, 'reset_cookies_analytics' );
+		$this->loader->add_filter( 'wp_ajax_nopriv_reset_cookies_analytics', $plugin_admin, 'reset_cookies_analytics' );
 
 		$customizer = new Simple_Cookie_Control_Customizer( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'customize_preview_init', $customizer, 'enqueue_scripts_preview_init' );
 		$this->loader->add_action( 'customize_controls_enqueue_scripts', $customizer, 'enqueue_scripts_controls' );
 		$this->loader->add_action( 'customize_register', $customizer, 'register_customizer_cookie_banner' );
+		$this->loader->add_action( 'customize_render_control_customizer_simple_cookie_control[cookieName]', $customizer, 'add_extra_information_above_cookieName_field' );
+
 	}
 
 	/**

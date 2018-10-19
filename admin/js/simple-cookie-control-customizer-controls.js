@@ -15,7 +15,24 @@
 				$('#customize-control-highlightTextColor').toggle();
 				$('#customize-control-highlightBorderColor').toggle();
 			} );
-		} );	
+		} );
+		
+		$('#scc-reset-cookies-analytics').click( function(){
+			//console.log( $(this) );
+			jQuery.ajax({
+			  url: analyticsCookieOptions.ajaxUrl,
+			  type: 'POST',
+			  data: {
+				action: 'reset_cookies_analytics',
+				reset: true,
+				security: analyticsCookieOptions.security
+				}
+			}).done( function( response ){ 
+				if( response ){
+					location.reload();
+				}
+			});
+		});
 
 	});
 

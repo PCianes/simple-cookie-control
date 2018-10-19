@@ -131,7 +131,9 @@ class Simple_Cookie_Control_Customizer {
 	 */
 	public function enqueue_scripts_controls() {
 
-		wp_enqueue_script( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-controls.js', array( 'jquery'), $this->version, true );
+		wp_register_script( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-controls.js', array( 'jquery'), $this->version, true );
+		wp_localize_script( $this->plugin_name . '-customizer-controls', 'analyticsCookieOptions', get_option( 'analytics_simple_cookie_control' ) );
+		wp_enqueue_script( $this->plugin_name . '-customizer-controls' );
 	}
 
 	/**
@@ -541,6 +543,24 @@ class Simple_Cookie_Control_Customizer {
 				'type'     		=> 'number',
 			)
 		);
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[reload]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 1,
+				'sanitize_callback' => array( $this, 'sanitize_checkbox'),
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[reload]',
+			array(
+				'label'			=> esc_html__( 'Reload or not the web after the user make a choice.', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 3,
+				'type'     		=> 'checkbox',
+			)
+		);
 
 		/**
 		 * Add options to set the 'GTM-XXXX of Google Tag Manager'
@@ -560,7 +580,7 @@ class Simple_Cookie_Control_Customizer {
 				'label'			=> esc_html__( 'Google Tag Manager ID', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'Set your ID of Google Tag Manager to insert your own analytics scripts.', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 3,
+				'priority' 		=> 4,
 				'type'     		=> 'text',
 			)
 		);
@@ -578,7 +598,7 @@ class Simple_Cookie_Control_Customizer {
 			array(
 				'label'			=> esc_html__( 'Activate or not the implementation of Google Tag Manager', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 4,
+				'priority' 		=> 5,
 				'type'     		=> 'radio',
 				'choices'		=> array(
 					'stop'			=> esc_html__('Do not activate it never', 'simple-cookie-control' ),
@@ -588,6 +608,17 @@ class Simple_Cookie_Control_Customizer {
 			)
 		);
 
+	}
+
+	/**
+	 * Add extra information above cookie name field
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_extra_information_above_cookieName_field(){
+		$current_analytics = get_option( 'analytics_simple_cookie_control' );
+
+		printf( '<p>%s %s</p><p>Allow: %u</p><p>Deny: %u</p><p id="scc-reset-cookies-analytics">%s</p>', esc_html__('Since: ', 'simple-cookie-control' ), $current_analytics['since'], $current_analytics['allow'], $current_analytics['deny'], esc_html__('Reset date and counters.', 'simple-cookie-control' ) );
 	}
 
 	/**

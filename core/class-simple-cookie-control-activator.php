@@ -30,6 +30,8 @@ class Simple_Cookie_Control_Activator {
 	 */
 	public static function activate() {
 
+		$ajax_url = admin_url('admin-ajax.php');
+
 		$default_options = array(
 			'position'					=> 'bottom',
 			'theme'						=> 'block',
@@ -54,9 +56,20 @@ class Simple_Cookie_Control_Activator {
 			'cookieDays'				=> 180,
 			'googleManager'				=> 'stop',
 			'googleManagerID'			=> 'GTM-XXXX',
+			'ajaxUrl'					=> $ajax_url,
+			'security'					=> wp_create_nonce( 'simple_cookie_control_nonce_customizer' ),
+			'reload'					=> true,
 		);
-
 		add_option( 'customizer_simple_cookie_control', $default_options );
+
+		$start_internal_analytics = array(
+			'since' 					=> date_i18n( get_option('date_format') ), 
+			'allow' 					=> 0, 
+			'deny' 						=> 0,
+			'ajaxUrl'					=> $ajax_url,
+			'security'					=> wp_create_nonce( 'simple_cookie_control_nonce_analytics' ),
+		);
+		add_option( 'analytics_simple_cookie_control', $start_internal_analytics );
 
 	}
 
