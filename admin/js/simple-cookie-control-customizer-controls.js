@@ -16,6 +16,12 @@
 				$('#customize-control-highlightBorderColor').toggle();
 			} );
 		} );
+
+		wp.customize.control( 'customizer_simple_cookie_control[internalAnalytics]', function( value ) {
+			value.setting.bind( function( newValue ) {
+				$('#customize-control-customizer_simple_cookie_control-internalAnaltics').toggle();
+			} );
+		} );
 		
 		$('#scc-reset-cookies-analytics').click( function(){
 			//console.log( $(this) );

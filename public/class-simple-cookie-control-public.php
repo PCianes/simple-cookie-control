@@ -112,8 +112,11 @@ class Simple_Cookie_Control_Public {
 
 		wp_enqueue_script( 'cookieconsent', plugin_dir_url( __FILE__ ) . 'js/cookieconsent.js', array( 'jquery' ), $this->version, false );
 
+		$options = get_option( 'customizer_simple_cookie_control' );
+		$options['security'] = wp_create_nonce( 'simple_cookie_control_nonce_customizer' );
+
 		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-public.js', array( 'cookieconsent', 'jquery' ), $this->version, false );
-		wp_localize_script( $this->plugin_name, 'customizerCookieOptions', get_option( 'customizer_simple_cookie_control' ) );
+		wp_localize_script( $this->plugin_name, 'customizerCookieOptions', $options );
 		wp_enqueue_script( $this->plugin_name );
 
 	}

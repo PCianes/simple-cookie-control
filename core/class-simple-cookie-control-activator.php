@@ -57,8 +57,8 @@ class Simple_Cookie_Control_Activator {
 			'googleManager'				=> 'stop',
 			'googleManagerID'			=> 'GTM-XXXX',
 			'ajaxUrl'					=> $ajax_url,
-			'security'					=> wp_create_nonce( 'simple_cookie_control_nonce_customizer' ),
 			'reload'					=> true,
+			'internalAnalytics'			=> true,
 		);
 		add_option( 'customizer_simple_cookie_control', $default_options );
 
@@ -67,7 +67,6 @@ class Simple_Cookie_Control_Activator {
 			'allow' 					=> 0, 
 			'deny' 						=> 0,
 			'ajaxUrl'					=> $ajax_url,
-			'security'					=> wp_create_nonce( 'simple_cookie_control_nonce_analytics' ),
 		);
 		add_option( 'analytics_simple_cookie_control', $start_internal_analytics );
 

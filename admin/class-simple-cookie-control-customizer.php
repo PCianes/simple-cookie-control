@@ -131,9 +131,23 @@ class Simple_Cookie_Control_Customizer {
 	 */
 	public function enqueue_scripts_controls() {
 
+		$options = get_option( 'analytics_simple_cookie_control' );
+		$options['security'] = wp_create_nonce( 'simple_cookie_control_nonce_analytics' );
+
 		wp_register_script( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-controls.js', array( 'jquery'), $this->version, true );
-		wp_localize_script( $this->plugin_name . '-customizer-controls', 'analyticsCookieOptions', get_option( 'analytics_simple_cookie_control' ) );
+		wp_localize_script( $this->plugin_name . '-customizer-controls', 'analyticsCookieOptions', $options );
 		wp_enqueue_script( $this->plugin_name . '-customizer-controls' );
+	}
+
+	/**
+	 * Register the Styles only for the customizer controls.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_styles_controls() {
+
+		wp_enqueue_style( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-customizer-controls.css', array(), $this->version, 'all' );
+
 	}
 
 	/**
@@ -506,6 +520,25 @@ class Simple_Cookie_Control_Customizer {
 		 * Add options to set the 'Cookie control'
 		 */
 		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[internalAnalytics]',
+			array(
+				'type'       => 'option',
+				'capability' => 'manage_options',
+				'default'	=> 1,
+				'sanitize_callback' => array( $this, 'sanitize_checkbox'),
+				'transport'=>'postMessage'
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[internalAnalytics]',
+			array(
+				'label'			=> esc_html__( 'Activate or not the implementation of basic internal Analytics.', 'simple-cookie-control' ),
+				'section'  		=> $section,
+				'priority' 		=> 1,
+				'type'     		=> 'checkbox',
+			)
+		);
+		$wp_customize->add_setting(
 			'customizer_simple_cookie_control[cookieName]',
 			array(
 				'type'       => 'option',
@@ -520,7 +553,7 @@ class Simple_Cookie_Control_Customizer {
 				'label'			=> esc_html__( 'Cookie name', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'Name of the cookie that keeps track of users choice.', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 1,
+				'priority' 		=> 2,
 				'type'     		=> 'text',
 			)
 		);
@@ -539,7 +572,7 @@ class Simple_Cookie_Control_Customizer {
 				'label'			=> esc_html__( 'Days to expiry', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'The cookies expire date, specified in days.', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 2,
+				'priority' 		=> 3,
 				'type'     		=> 'number',
 			)
 		);
@@ -557,7 +590,7 @@ class Simple_Cookie_Control_Customizer {
 			array(
 				'label'			=> esc_html__( 'Reload or not the web after the user make a choice.', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 3,
+				'priority' 		=> 4,
 				'type'     		=> 'checkbox',
 			)
 		);
@@ -616,9 +649,25 @@ class Simple_Cookie_Control_Customizer {
 	 * @since    1.0.0
 	 */
 	public function add_extra_information_above_cookieName_field(){
-		$current_analytics = get_option( 'analytics_simple_cookie_control' );
 
-		printf( '<p>%s %s</p><p>Allow: %u</p><p>Deny: %u</p><p id="scc-reset-cookies-analytics">%s</p>', esc_html__('Since: ', 'simple-cookie-control' ), $current_analytics['since'], $current_analytics['allow'], $current_analytics['deny'], esc_html__('Reset date and counters.', 'simple-cookie-control' ) );
+		$current_analytics = get_option( 'analytics_simple_cookie_control' );
+		$total = $current_analytics['allow'] + $current_analytics['deny'];
+		$allow = ( 0 !== (int)$current_analytics['allow'] ) ? ( ( $current_analytics['allow'] * 100 ) / $total ) : 0;
+		$deny = ( 0 !== (int)$current_analytics['deny'] ) ? ( 100 - (int)$allow ) : 0;
+
+		$allow_deg = (int)( $allow * 3.6 );
+		$deny_deg = 360 - $allow_deg;
+		$deny_extra = false;
+		if ( $deny_deg > 180 ) {
+			$deny_extra = $deny_deg - 180;
+			$deny_deg = 180;
+		}
+
+		/**
+		 * Include here all html with a view file.
+		 * All about internal analytics information.
+		 */
+		include plugin_dir_path( dirname( __FILE__ ) ) . 'admin/views/simple-cookie-control-display-internal-analytics.php';
 	}
 
 	/**

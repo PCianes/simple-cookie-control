@@ -184,6 +184,7 @@ class Simple_Cookie_Control {
 		$customizer = new Simple_Cookie_Control_Customizer( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'customize_preview_init', $customizer, 'enqueue_scripts_preview_init' );
 		$this->loader->add_action( 'customize_controls_enqueue_scripts', $customizer, 'enqueue_scripts_controls' );
+		$this->loader->add_action( 'customize_controls_print_styles', $customizer, 'enqueue_styles_controls' );
 		$this->loader->add_action( 'customize_register', $customizer, 'register_customizer_cookie_banner' );
 		$this->loader->add_action( 'customize_render_control_customizer_simple_cookie_control[cookieName]', $customizer, 'add_extra_information_above_cookieName_field' );
 
