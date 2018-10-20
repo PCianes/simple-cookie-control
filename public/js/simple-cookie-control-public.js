@@ -1,5 +1,6 @@
 (function( $ ) {
 	'use strict';
+
 	let palette = ! customizerCookieOptions.colors ? null : {
 		'popup': {
 			'background': customizerCookieOptions.popupBackgroundColor,
@@ -38,6 +39,18 @@
 					'type': 'opt-in',
 					'revokable' : customizerCookieOptions.contentRevokable,
 					'animateRevokable' : false,
+					'cookie': {
+						'name' : customizerCookieOptions.cookieName,
+						'expiryDays': parseInt( customizerCookieOptions.cookieDays ),
+					},
+					onInitialise: function() {
+						console.log( 'Simple Cookie Control: ', this.hasConsented() ? 'Accepted cookies' : 'Rejected Cookies' );
+					},
+					onStatusChange: function( status ) { 
+						if( customizerCookieOptions.internalAnalytics ) { saveUserChoice( status ); }
+						console.log( 'Simple Cookie Control: ', this.hasConsented() ? 'Accepted cookies' : 'Rejected Cookies' );
+						if( customizerCookieOptions.reload ) { location.reload(); }
+					},
 				}
 			);
 
@@ -48,5 +61,18 @@
 			});
 		}
 	);
+
+	function saveUserChoice( status ){
+		var postData = {
+			action: 'save_user_choice',
+			choice: status,
+			security: customizerCookieOptions.security
+		}
+		jQuery.ajax({
+		  url: customizerCookieOptions.ajaxUrl,
+		  type: 'POST',
+		  data: postData
+		});
+	}
 
 })( jQuery );
