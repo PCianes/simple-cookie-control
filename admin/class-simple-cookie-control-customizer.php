@@ -170,7 +170,6 @@ class Simple_Cookie_Control_Customizer {
 
 		$this->add_cookies_styles_section( $wp_customize );
 		$this->add_cookies_content_section( $wp_customize );
-		$this->add_cookies_secondary_section( $wp_customize );
 		$this->add_cookies_control_section( $wp_customize );
 
 	}
@@ -429,27 +428,6 @@ class Simple_Cookie_Control_Customizer {
 			)
 		);
 
-	}
-
-	/**
-	 * Customizer control to Third section: secondary banner
-	 *
-	 * @since    1.0.0
-	 * @param      object $wp_customize       Object from WP Customize Manager
-	 */
-	public function add_cookies_secondary_section( $wp_customize ) {
-
-		$section = 'scc_secondary';
-		
-		$wp_customize->add_section(
-			$section,
-			array(
-				'title'      => __( 'Secondary banner', 'simple-cookie-control' ),
-				'panel'      => $this->plugin_name,
-				'priority'   => 3,
-				'capability' => 'manage_options',
-			)
-		);
 
 		/**
 		 * Add options to set the 'SECONDARY BANNER'
@@ -470,8 +448,8 @@ class Simple_Cookie_Control_Customizer {
 				'label'    		=> esc_html__( 'The content of the secondary banner', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'Put only text or even html like: "<span class="dashicons dashicons-image-filter"></span>" or an img tag.', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 1,
-				'type'     		=> 'text',
+				'priority' 		=> 6,
+				'type'     		=> 'textarea',
 			)
 		);
 		$wp_customize->add_setting(
@@ -489,7 +467,7 @@ class Simple_Cookie_Control_Customizer {
 				'label'			=> esc_html__( 'Show or not the secondary banner after the primary one is hidden', 'simple-cookie-control' ),
 				'description'	=> esc_html__( 'The secondary banner allow users see again the main banner to change their previous decision.', 'simple-cookie-control' ),
 				'section'  		=> $section,
-				'priority' 		=> 2,
+				'priority' 		=> 7,
 				'type'     		=> 'checkbox',
 			)
 		);
@@ -497,7 +475,7 @@ class Simple_Cookie_Control_Customizer {
 	}
 
 	/**
-	 * Customizer control to Quarter section: cookie control
+	 * Customizer control to third section: Analytics & cookie control
 	 *
 	 * @since    1.0.0
 	 * @param      object $wp_customize       Object from WP Customize Manager

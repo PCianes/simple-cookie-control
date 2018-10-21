@@ -54,12 +54,23 @@
 				}
 			);
 
-			let banner = $("[aria-describedby*='cookieconsent:desc']");
-			$( ".cc-revoke" ).click(function() {
-				banner.removeClass('cc-invisible').removeAttr('style');
+			let hasConsented = window.cookieconsent.utils.getCookie( customizerCookieOptions.cookieName );
+
+			$('.cc-revoke').click( function() {
+
+				$("[aria-describedby*='cookieconsent:desc']").removeClass('cc-invisible').removeAttr('style');
 				$(this).css('display','none');
+
+				if ( 'allow' === hasConsented ){
+					$('.cc-allow').toggle();
+				} else if ( 'deny' === hasConsented ) {
+					$('.cc-deny').toggle();
+				}
+
 			});
+
 		}
+
 	);
 
 	function saveUserChoice( status ){
