@@ -87,8 +87,7 @@ class Simple_Cookie_Control_Admin {
 		 * class.
 		 */
 
-		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-admin.min.css', array(), $this->version, 'all' );
-
+		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-admin.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -110,7 +109,7 @@ class Simple_Cookie_Control_Admin {
 		 * class.
 		 */
 
-		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-admin.min.js', array( 'jquery' ), $this->version, false );
+		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-admin.min.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -120,7 +119,7 @@ class Simple_Cookie_Control_Admin {
 	 * @param      array $links      Array with links of the plugin
 	 */
 	public function settings_link_on_plugins_table( $links ) {
-		
+
 		array_unshift( $links, '<a href="customize.php">' . __( 'Go to customizer', 'simple-cookie-control' ) . '</a>' );
 		return $links;
 
@@ -133,7 +132,7 @@ class Simple_Cookie_Control_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_user_choice_into_db(){
+	public function add_user_choice_into_db() {
 
 		check_ajax_referer( 'simple_cookie_control_nonce_customizer', 'security' );
 
@@ -144,14 +143,14 @@ class Simple_Cookie_Control_Admin {
 			switch ( $choice ) {
 				case 'allow':
 					$current_analytics['allow'] = $current_analytics['allow'] + 1;
-				break;
-				
+					break;
+
 				case 'deny':
 					$current_analytics['deny'] = $current_analytics['deny'] + 1;
-				break;
-				
+					break;
+
 				default:
-				break;
+					break;
 			}
 			update_option( 'analytics_simple_cookie_control', $current_analytics );
 		}
@@ -159,7 +158,7 @@ class Simple_Cookie_Control_Admin {
 		header( 'Content-type: application/json' );
 		echo json_encode( true );
 		die;
-		
+
 	}
 
 	/**
@@ -168,17 +167,17 @@ class Simple_Cookie_Control_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function reset_cookies_analytics(){
+	public function reset_cookies_analytics() {
 
 		check_ajax_referer( 'simple_cookie_control_nonce_analytics', 'security' );
 
 		if ( ! empty( $_POST['reset'] ) && $_POST['reset'] ) {
 			$start_internal_analytics = array(
-				'since' 	=> date_i18n( get_option('date_format') ), 
-				'allow' 	=> 0, 
-				'deny' 		=> 0,
-				'ajaxUrl'	=> admin_url('admin-ajax.php'),
-				'security'	=> wp_create_nonce( 'simple_cookie_control_nonce_analytics' ),
+				'since'    => date_i18n( get_option( 'date_format' ) ),
+				'allow'    => 0,
+				'deny'     => 0,
+				'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
+				'security' => wp_create_nonce( 'simple_cookie_control_nonce_analytics' ),
 			);
 			update_option( 'analytics_simple_cookie_control', $start_internal_analytics );
 		}

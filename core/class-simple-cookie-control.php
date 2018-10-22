@@ -77,8 +77,7 @@ class Simple_Cookie_Control {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		//$this->define_gutenberg_hooks();
-
+		// $this->define_gutenberg_hooks();
 	}
 
 	/**
@@ -210,7 +209,7 @@ class Simple_Cookie_Control {
 
 		$plugin_options = get_option( 'customizer_simple_cookie_control' );
 
-		if( 'always' === $plugin_options['googleManager'] || ( 'conditional' === $plugin_options['googleManager'] && 'allow' === $_COOKIE[ $plugin_options['cookieName'] ] ) ) {
+		if ( 'always' === $plugin_options['googleManager'] || ( 'conditional' === $plugin_options['googleManager'] && 'allow' === $_COOKIE[ $plugin_options['cookieName'] ] ) ) {
 			$this->loader->add_action( 'wp_head', $plugin_public, 'enqueue_head_google_scripts', 1 );
 			$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_body_google_scripts', 1 );
 		}
@@ -218,7 +217,7 @@ class Simple_Cookie_Control {
 		$this->loader->add_shortcode( 'SCC_IFRAME', $plugin_public, 'cookie_control_iframe' );
 		$this->loader->add_shortcode( 'SCC_ALLOW', $plugin_public, 'cookie_control_allow', 10, 2 );
 		$this->loader->add_shortcode( 'SCC_DENY', $plugin_public, 'cookie_control_deny', 10, 2 );
-		
+
 	}
 
 	/**
@@ -242,11 +241,9 @@ class Simple_Cookie_Control {
 		$this->loader->add_filter( 'block_categories', $plugin_gutenberg, 'add_custom_blocks_categories', 10, 2 );
 		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_dynamic_blocks' );
 		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_meta_fields' );
-		//$this->loader->add_filter( 'register_post_type_args', $plugin_gutenberg, 'add_templates_to_post_types', 20, 2 );
-		//$this->loader->add_filter( 'allowed_block_types', $plugin_gutenberg, 'allowed_blocks_to_post_types', 20, 2 );
-		//$this->loader->add_action( 'current_screen', $plugin_gutenberg, 'gutenberg_removal' );
-
-
+		// $this->loader->add_filter( 'register_post_type_args', $plugin_gutenberg, 'add_templates_to_post_types', 20, 2 );
+		// $this->loader->add_filter( 'allowed_block_types', $plugin_gutenberg, 'allowed_blocks_to_post_types', 20, 2 );
+		// $this->loader->add_action( 'current_screen', $plugin_gutenberg, 'gutenberg_removal' );
 	}
 
 	/**

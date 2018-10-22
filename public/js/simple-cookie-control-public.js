@@ -34,7 +34,7 @@
 						'deny'	: customizerCookieOptions.contentDeny,
 						'link'	: customizerCookieOptions.contentLink,
 						'href': customizerCookieOptions.contentHref,
-						'policy': customizerCookieOptions.contentPolicy, 
+						'policy': customizerCookieOptions.contentPolicy,
 					},
 					'type': 'opt-in',
 					'revokable' : customizerCookieOptions.contentRevokable,
@@ -46,39 +46,49 @@
 					onInitialise: function() {
 						console.log( 'Simple Cookie Control: ', this.hasConsented() ? 'Accepted cookies' : 'Rejected Cookies' );
 					},
-					onStatusChange: function( status ) { 
-						if( customizerCookieOptions.internalAnalytics ) { saveUserChoice( status ); }
+					onStatusChange: function( status ) {
+						if ( customizerCookieOptions.internalAnalytics ) {
+							saveUserChoice( status ); }
 						console.log( 'Simple Cookie Control: ', this.hasConsented() ? 'Accepted cookies' : 'Rejected Cookies' );
-						if( 'deny' === status ) {  deleteSecundaryCookies(); }
-						if( customizerCookieOptions.reload ) { location.reload(); }
+						if ( 'deny' === status ) {
+							deleteSecundaryCookies(); }
+						if ( customizerCookieOptions.reload ) {
+							location.reload(); }
 					},
 				}
 			);
 
-			$('.cc-revoke').click( function() {
+			$( '.cc-revoke' ).click(
+				function() {
 
-				$("[aria-describedby*='cookieconsent:desc']").removeClass('cc-invisible').removeAttr('style');
-				$(this).css('display','none');
+						$( "[aria-describedby*='cookieconsent:desc']" ).removeClass( 'cc-invisible' ).removeAttr( 'style' );
+						$( this ).css( 'display','none' );
 
-				if ( 'allow' === window.cookieconsent.utils.getCookie( customizerCookieOptions.cookieName ) ){
-					$('.cc-allow').toggle();
+					if ( 'allow' === window.cookieconsent.utils.getCookie( customizerCookieOptions.cookieName ) ) {
+						  $( '.cc-allow' ).toggle();
+					}
+
 				}
+			);
 
-			});
-
-			$('.scc-secundary_banner').click( function() {
-				window.cookieconsent.utils.setCookie( $(this).data('cookie-name'), $(this).data('cookie-value'), parseInt( customizerCookieOptions.cookieDays ) );
-				location.reload();
-			});
+			$( '.scc-secundary-banner' ).click(
+				function() {
+						window.cookieconsent.utils.setCookie( $( this ).data( 'cookie-name' ), $( this ).data( 'cookie-value' ), parseInt( customizerCookieOptions.cookieDays ) );
+						location.reload();
+				}
+			);
 		}
-
 	);
 
 	function deleteSecundaryCookies(){
-		$('.scc-secundary-deny').each( function() {
-			window.cookieconsent.utils.setCookie( $(this).data('cookie-name'), $(this).data('cookie-value'), parseInt( -customizerCookieOptions.cookieDays ) );
-			location.reload();
-		});
+		$( '.scc-secundary-deny' ).each(
+			function() {
+				if ( customizerCookieOptions.cookieName === $( this ).data( 'cookie-name' ) ) {
+					return;
+				}
+					window.cookieconsent.utils.setCookie( $( this ).data( 'cookie-name' ), $( this ).data( 'cookie-value' ), parseInt( -customizerCookieOptions.cookieDays ) );
+			}
+		);
 	}
 
 	function saveUserChoice( status ){
@@ -87,11 +97,13 @@
 			choice: status,
 			security: customizerCookieOptions.security
 		}
-		jQuery.ajax({
-		  url: customizerCookieOptions.ajaxUrl,
-		  type: 'POST',
-		  data: postData
-		});
+		jQuery.ajax(
+			{
+				url: customizerCookieOptions.ajaxUrl,
+				type: 'POST',
+				data: postData
+			}
+		);
 	}
 
 })( jQuery );

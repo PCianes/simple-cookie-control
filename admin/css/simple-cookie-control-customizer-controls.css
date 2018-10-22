@@ -3,88 +3,88 @@
  * included in this file.
  */
 #customize-control-customizer_simple_cookie_control-internalAnaltics {
-    margin-top: -10px;
-    border: 1px solid;
-    width: 90%;
-    padding: 0px 10px 10px 10px;
+	margin-top: -10px;
+	border: 1px solid;
+	width: 90%;
+	padding: 0px 10px 10px 10px;
 }
 
 #scc-reset-cookies-analytics {
-    color: red;
-    background: white;
-    border: 1px solid;
-    cursor: pointer;
-    float: right;
+	color: red;
+	background: white;
+	border: 1px solid;
+	cursor: pointer;
+	float: right;
 }
 
 .css-analytics-allow-deny p {
-    margin: 0px;
-    padding: 0px;
+	margin: 0px;
+	padding: 0px;
 }
 
 .css-analytics-allow-deny .allow {
-    color: #0a0;
+	color: #0a0;
 }
 
 .css-analytics-allow-deny .deny {
-    color: red;
+	color: red;
 }
 
 .pieContainer {
-    height: 150px;
-    position: relative;
-    margin-bottom: 20px;
-    left: 14%;
+	height: 150px;
+	position: relative;
+	margin-bottom: 20px;
+	left: 14%;
   }
-  
+
 .pieBackground {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
-    box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
-    background: #0a0;
-} 
-  
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	border-radius: 100%;
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
+	background: #0a0;
+}
+
 .pie {
-    transition: all 1s;
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
-    clip: rect(0px, 75px, 150px, 0px);
+	transition: all 1s;
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	border-radius: 100%;
+	clip: rect(0px, 75px, 150px, 0px);
 }
-  
+
 .hold {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
-    clip: rect(0px, 150px, 150px, 75px);
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	border-radius: 100%;
+	clip: rect(0px, 150px, 150px, 75px);
 }
-    
+
 #deny .pie, #deny-extra .pie {
-    background-color: red;
+	background-color: red;
 }
-  
+
 .innerCircle {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    background-color: #444;
-    border-radius: 100%;
-    top: 15px;
-    left: 15px; 
-    box-shadow: 0px 0px 8px rgba(0,0,0,0.5) inset;
-    color: white;
+	position: absolute;
+	width: 120px;
+	height: 120px;
+	background-color: #444;
+	border-radius: 100%;
+	top: 15px;
+	left: 15px;
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.5) inset;
+	color: white;
 }
 
 .innerCircle .content {
-    position: absolute;
-    display: block;
-    width: 120px;
-    top: 30px;
-    left: 0;
-    text-align: center;
-    font-size: 14px;
+	position: absolute;
+	display: block;
+	width: 120px;
+	top: 30px;
+	left: 0;
+	text-align: center;
+	font-size: 14px;
 }
