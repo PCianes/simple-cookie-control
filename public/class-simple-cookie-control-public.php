@@ -152,4 +152,92 @@ class Simple_Cookie_Control_Public {
 		<?php
 	}
 
+	/**
+	 * Add Shortcode 'SCC_IFRAME' to conditional iframe by cookie control
+	 *
+	 * @since    1.0.0
+	 * @param      array $atts       The attributes of the shortcode
+	 */
+	public function cookie_control_iframe( $atts ){
+
+		$main_cookie_name = get_option( 'customizer_simple_cookie_control' )['cookieName'];
+		$main_cookie_value = 'allow';
+
+		extract( shortcode_atts( 
+			array(
+				'width' 		=> '600',
+				'height' 		=> '450',
+				'id' 			=> 'scc-iframe',
+				'iframe' 		=> '#',
+				'img' 			=> '#',
+				'message'		=> get_option( 'customizer_simple_cookie_control' )['contentMessage'],
+				'cookie_name'	=> $main_cookie_name,
+				'cookie_value'	=> $main_cookie_value,
+			), $atts )
+		);
+	
+		if ( $main_cookie_value === $_COOKIE[ $main_cookie_name ] || $cookie_value === $_COOKIE[ $cookie_name ] ){	
+			return '<iframe width="'. (int) $width .'" height="'. (int) $height .'" src="'. esc_url( $iframe ) .'" frameborder="0" allowfullscreen></iframe>' . sprintf('<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_html( $cookie_name ), esc_html( $cookie_value ) );
+		}
+		else {
+			return sprintf('<img id="%s" src="%s"/><button type="button" class="scc-secundary_banner" data-cookie-name="%s" data-cookie-value="%s">%s</button>' , esc_attr( $id ), esc_url( $img ), esc_html( $cookie_name ), esc_html( $cookie_value ), esc_html( $message ) );
+		}
+
+	}
+
+	/**
+	 * Add Shortcode 'SCC_ALLOW' to conditional content by cookie control
+	 *
+	 * @since    1.0.0
+	 * @param      array $atts       The attributes of the shortcode
+	 * @param      string $content   The content of the shortcode
+	 */
+	public function cookie_control_allow( $atts, $content ){
+
+		return $this->return_shortcode_by_cookie_control( 'allow', $atts, $content );
+
+	}
+
+	/**
+	 * Add Shortcode 'SCC_DENY' to conditional content by cookie control
+	 *
+	 * @since    1.0.0
+	 * @param      array $atts       The attributes of the shortcode
+	 * @param      string $content   The content of the shortcode
+	 */
+	public function cookie_control_deny( $atts, $content ){
+
+		return $this->return_shortcode_by_cookie_control( 'deny', $atts, $content );
+
+	}
+
+	/**
+	 * Return shortcode by $cookie_value and main cookie control
+	 *
+	 * @since    1.0.0
+	 * @param      string $main_cookie_value    The value of the cookie to check
+	 * @param      array $atts       			The attributes of the shortcode
+	 * @param      string $content   			The content of the shortcode
+	 */
+	private function return_shortcode_by_cookie_control( $main_cookie_value, $atts, $content ){
+
+		$main_cookie_name = get_option( 'customizer_simple_cookie_control' )['cookieName'];
+
+		extract( shortcode_atts( 
+			array(
+				'message'		=> get_option( 'customizer_simple_cookie_control' )['contentMessage'],
+				'cookie_name'	=> $main_cookie_name,
+				'cookie_value'	=> $main_cookie_value,
+			), $atts )
+		);
+	
+		if ( $main_cookie_value === $_COOKIE[ $main_cookie_name ] || $cookie_value === $_COOKIE[ $cookie_name ] ){	
+			return do_shortcode( $content ) . sprintf('<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_html( $cookie_name ), esc_html( $cookie_value ) );
+		}
+		else {
+			return sprintf('<button type="button" class="scc-secundary_banner" data-cookie-name="%s" data-cookie-value="%s">%s</button>' , esc_html( $cookie_name ), esc_html( $cookie_value ), esc_html( $message ) );
+		}
+
+	}
+
 }

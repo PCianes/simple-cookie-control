@@ -77,7 +77,7 @@ class Simple_Cookie_Control {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->define_gutenberg_hooks();
+		//$this->define_gutenberg_hooks();
 
 	}
 
@@ -214,6 +214,10 @@ class Simple_Cookie_Control {
 			$this->loader->add_action( 'wp_head', $plugin_public, 'enqueue_head_google_scripts', 1 );
 			$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_body_google_scripts', 1 );
 		}
+
+		$this->loader->add_shortcode( 'SCC_IFRAME', $plugin_public, 'cookie_control_iframe' );
+		$this->loader->add_shortcode( 'SCC_ALLOW', $plugin_public, 'cookie_control_allow', 10, 2 );
+		$this->loader->add_shortcode( 'SCC_DENY', $plugin_public, 'cookie_control_deny', 10, 2 );
 		
 	}
 
