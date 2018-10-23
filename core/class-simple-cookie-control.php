@@ -212,6 +212,7 @@ class Simple_Cookie_Control {
 
 		if ( $plugin_options['yett'] && 'allow' !== $_COOKIE[ $plugin_options['cookieName'] ] ) {
 			$this->loader->add_action( 'wp_head', $plugin_public, 'enqueue_yett_scripts', 1 );
+			$this->loader->add_action( 'script_loader_tag', $plugin_public, 'add_block_attribute_to_scripts', 9999, 3 );
 		}
 
 		if ( 'always' === $plugin_options['googleManager'] || ( 'conditional' === $plugin_options['googleManager'] && 'allow' === $_COOKIE[ $plugin_options['cookieName'] ] ) ) {

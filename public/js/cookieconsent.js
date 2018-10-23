@@ -116,7 +116,7 @@
 			for (i = 0, len = str.length; i < len; ++i) {
 				chr    = str.charCodeAt( i );
 				hash   = (hash << 5) - hash + chr;
-				hash | = 0;
+				hash |= 0;
 			}
 			return hash;
 		},
@@ -1123,14 +1123,13 @@
 
 		function applyRevokeButton() {
 			// revokable is true if advanced compliance is selected
-			if (this.options.type != 'info') {
-				this.options.revokable = true;
-			}
+			// if (this.options.type != 'info') {
+				// this.options.revokable = true;
+			// }
 			// animateRevokable false for mobile devices
-			if (util.isMobile()) {
-				this.options.animateRevokable = false;
-			}
-
+			// if ( util.isMobile() ) {
+			// this.options.animateRevokable = false;
+			// }
 			if (this.options.revokable) {
 				var classes = getPositionClasses.call( this );
 				if (this.options.animateRevokable) {

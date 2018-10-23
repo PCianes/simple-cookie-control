@@ -662,6 +662,31 @@ class Simple_Cookie_Control_Customizer {
 				'type'     => 'checkbox',
 			)
 		);
+
+		/**
+		 * Add options to set the scripts to add 'type="javascript/blocked"'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[scritpsBlocked]',
+			array(
+				'type'              => 'option',
+				'capability'        => 'manage_options',
+				'default'           => 'name-of-the-file-1.js, name-of-the-file-2.js',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'         => 'postMessage',
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[scritpsBlocked]',
+			array(
+				'label'       => esc_html__( '<scripts> to try to block', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Set comma separated list of JS file names: search it into the src of the <scripts> you want to block.', 'simple-cookie-control' ),
+				'section'     => $section,
+				'priority'    => 3,
+				'type'        => 'textarea',
+			)
+		);
+
 		/**
 		 * Add options to set the 'blacklist & whitelist'
 		 */
@@ -678,10 +703,10 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_control(
 			'customizer_simple_cookie_control[blacklist]',
 			array(
-				'label'       => esc_html__( 'Blacklist to block', 'simple-cookie-control' ),
-				'description' => esc_html__( 'Set comma separated list of regexes to test urls against.', 'simple-cookie-control' ),
+				'label'       => esc_html__( 'Blacklist to block (also about JS inline with external calls into the code)', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Set comma separated list of regexes to test URLs against. Example: /black-domain-name-1/, /black-domain-name-2/ ', 'simple-cookie-control' ),
 				'section'     => $section,
-				'priority'    => 2,
+				'priority'    => 3,
 				'type'        => 'textarea',
 			)
 		);
@@ -698,10 +723,10 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_control(
 			'customizer_simple_cookie_control[whitelist]',
 			array(
-				'label'       => esc_html__( 'Whitelist not to block', 'simple-cookie-control' ),
-				'description' => esc_html__( 'Set comma separated list of regexes to test urls against.', 'simple-cookie-control' ),
+				'label'       => esc_html__( 'Whitelist not to block (also about JS inline with external calls into the code)', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Set comma separated list of regexes to test URLs against. Example: /white-domain-name-1/, /white-domain-name-2/', 'simple-cookie-control' ),
 				'section'     => $section,
-				'priority'    => 3,
+				'priority'    => 4,
 				'type'        => 'textarea',
 			)
 		);

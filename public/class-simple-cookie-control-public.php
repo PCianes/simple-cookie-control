@@ -126,6 +126,24 @@ class Simple_Cookie_Control_Public {
 		<!-- End Yett Manager -->
 		<?php
 	}
+	
+	/**
+	 * Add attribute 'javascript/bloked' to some scripts to allow Yet block them
+	 *
+	 * @since    1.0.0
+	 */
+	function add_block_attribute_to_scripts( $tag, $handle, $src ) {
+
+		$files_names_to_block = explode( ',', get_option( 'customizer_simple_cookie_control' )['scritpsBlocked'] );
+			
+		foreach ( $files_names_to_block as $file_name ) {
+			if( strrpos( $src, trim( $file_name ) ) !== false ){
+				return '<script type="javascript/bloked" src="' . esc_url( $src ) . '></script>';
+			}
+		}
+		
+		return $tag;
+	}
 
 	/**
 	 * Add Google tag manager script into the head

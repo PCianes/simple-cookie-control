@@ -60,6 +60,7 @@ class Simple_Cookie_Control_Activator {
 			'reload'                   => true,
 			'internalAnalytics'        => true,
 			'yett'        				=> false,
+			'scritpsBlocked'			=> '',
 			'blacklist'        			=> '',
 			'whitelist'			        => '',
 		);
