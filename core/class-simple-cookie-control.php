@@ -186,6 +186,7 @@ class Simple_Cookie_Control {
 		$this->loader->add_action( 'customize_controls_print_styles', $customizer, 'enqueue_styles_controls' );
 		$this->loader->add_action( 'customize_register', $customizer, 'register_customizer_cookie_banner' );
 		$this->loader->add_action( 'customize_render_control_customizer_simple_cookie_control[cookieName]', $customizer, 'add_extra_information_above_cookieName_field' );
+		$this->loader->add_action( 'customize_render_control_customizer_simple_cookie_control[yett]', $customizer, 'add_extra_information_above_yett_control' );
 
 	}
 
@@ -208,6 +209,10 @@ class Simple_Cookie_Control {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$plugin_options = get_option( 'customizer_simple_cookie_control' );
+
+		if ( $plugin_options['yett'] && 'allow' !== $_COOKIE[ $plugin_options['cookieName'] ] ) {
+			$this->loader->add_action( 'wp_head', $plugin_public, 'enqueue_yett_scripts', 1 );
+		}
 
 		if ( 'always' === $plugin_options['googleManager'] || ( 'conditional' === $plugin_options['googleManager'] && 'allow' === $_COOKIE[ $plugin_options['cookieName'] ] ) ) {
 			$this->loader->add_action( 'wp_head', $plugin_public, 'enqueue_head_google_scripts', 1 );

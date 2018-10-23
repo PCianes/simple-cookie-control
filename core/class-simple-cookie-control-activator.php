@@ -59,6 +59,9 @@ class Simple_Cookie_Control_Activator {
 			'ajaxUrl'                  => $ajax_url,
 			'reload'                   => true,
 			'internalAnalytics'        => true,
+			'yett'        				=> false,
+			'blacklist'        			=> '',
+			'whitelist'			        => '',
 		);
 		add_option( 'customizer_simple_cookie_control', $default_options );
 

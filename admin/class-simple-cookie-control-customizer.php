@@ -160,8 +160,8 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_panel(
 			$this->plugin_name,
 			array(
-				'title'       => __( 'Simple Cookie Control', 'simple-cookie-control' ),
-				'description' => __( 'Customize Manager for customcookie banner', 'simple-cookie-control' ),
+				'title'       => esc_html__( 'Simple Cookie Control', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Customize Manager for customcookie banner', 'simple-cookie-control' ),
 				'priority'    => 160,
 				'capability'  => 'manage_options',
 			)
@@ -170,6 +170,7 @@ class Simple_Cookie_Control_Customizer {
 		$this->add_cookies_styles_section( $wp_customize );
 		$this->add_cookies_content_section( $wp_customize );
 		$this->add_cookies_control_section( $wp_customize );
+		$this->add_cookies_advanced_section( $wp_customize );
 
 	}
 
@@ -186,7 +187,7 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_section(
 			$section,
 			array(
-				'title'      => __( 'Styles of the banner', 'simple-cookie-control' ),
+				'title'      => esc_html__( 'Styles of the banner', 'simple-cookie-control' ),
 				'panel'      => $this->plugin_name,
 				'priority'   => 1,
 				'capability' => 'manage_options',
@@ -313,7 +314,7 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_section(
 			$section,
 			array(
-				'title'      => __( 'Contents of the banner', 'simple-cookie-control' ),
+				'title'      => esc_html__( 'Contents of the banner', 'simple-cookie-control' ),
 				'panel'      => $this->plugin_name,
 				'priority'   => 2,
 				'capability' => 'manage_options',
@@ -485,9 +486,9 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_section(
 			$section,
 			array(
-				'title'      => __( 'Analytics & Cookie control', 'simple-cookie-control' ),
+				'title'      => esc_html__( 'Analytics & Cookie control', 'simple-cookie-control' ),
 				'panel'      => $this->plugin_name,
-				'priority'   => 4,
+				'priority'   => 3,
 				'capability' => 'manage_options',
 			)
 		);
@@ -617,6 +618,108 @@ class Simple_Cookie_Control_Customizer {
 			)
 		);
 
+	}
+
+	/**
+	 * Customizer control to last section: advanced control
+	 *
+	 * @since    1.0.0
+	 * @param      object $wp_customize       Object from WP Customize Manager
+	 */
+	public function add_cookies_advanced_section( $wp_customize ) {
+
+		$section = 'scc_advanced';
+
+		$wp_customize->add_section(
+			$section,
+			array(
+				'title'      => esc_html__( 'Advanced control', 'simple-cookie-control' ),
+				'panel'      => $this->plugin_name,
+				'priority'   => 4,
+				'capability' => 'manage_options',
+			)
+		);
+
+		/**
+		 * Add option to set or not 'YETT'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[yett]',
+			array(
+				'type'              => 'option',
+				'capability'        => 'manage_options',
+				'default'           => 0,
+				'sanitize_callback' => array( $this, 'sanitize_checkbox' ),
+				'transport'         => 'postMessage',
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[yett]',
+			array(
+				'label'    => esc_html__( 'Add or not extra control to prevents the execution of third party scripts.', 'simple-cookie-control' ),
+				'section'  => $section,
+				'priority' => 1,
+				'type'     => 'checkbox',
+			)
+		);
+		/**
+		 * Add options to set the 'blacklist & whitelist'
+		 */
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[blacklist]',
+			array(
+				'type'              => 'option',
+				'capability'        => 'manage_options',
+				'default'           => '/googletagmanager\.com/, /piwik\.php/, /cdn\.mxpnl\.com/',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'         => 'postMessage',
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[blacklist]',
+			array(
+				'label'       => esc_html__( 'Blacklist to block', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Set comma separated list of regexes to test urls against.', 'simple-cookie-control' ),
+				'section'     => $section,
+				'priority'    => 2,
+				'type'        => 'textarea',
+			)
+		);
+		$wp_customize->add_setting(
+			'customizer_simple_cookie_control[whitelist]',
+			array(
+				'type'              => 'option',
+				'capability'        => 'manage_options',
+				'default'           => '/my-whitelisted-domain/',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'         => 'postMessage',
+			)
+		);
+		$wp_customize->add_control(
+			'customizer_simple_cookie_control[whitelist]',
+			array(
+				'label'       => esc_html__( 'Whitelist not to block', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Set comma separated list of regexes to test urls against.', 'simple-cookie-control' ),
+				'section'     => $section,
+				'priority'    => 3,
+				'type'        => 'textarea',
+			)
+		);
+
+	}
+
+	/**
+	 * Add extra information about shortcodes above yett control
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_extra_information_above_yett_control() {
+
+		/**
+		 * Include here all html with a view file.
+		 * All about [shortcode] information.
+		 */
+		include plugin_dir_path( dirname( __FILE__ ) ) . 'admin/views/simple-cookie-control-display-shortcode-information.php';
 	}
 
 	/**

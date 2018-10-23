@@ -98,18 +98,6 @@ class Simple_Cookie_Control_Public {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Cookie_Control_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Cookie_Control_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_script( 'cookieconsent', plugin_dir_url( __FILE__ ) . 'js/cookieconsent.js', array( 'jquery' ), $this->version, false );
 
 		$options             = get_option( 'customizer_simple_cookie_control' );
@@ -119,6 +107,24 @@ class Simple_Cookie_Control_Public {
 		wp_localize_script( $this->plugin_name, 'customizerCookieOptions', $options );
 		wp_enqueue_script( $this->plugin_name );
 
+	}
+
+	/**
+	 * Register the JavaScript for the Yett library
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_yett_scripts() {
+		$options  = get_option( 'customizer_simple_cookie_control' );
+		?>
+		<!-- Yett Manager -->
+		<script>
+			window.YETT_BLACKLIST = [ <?php echo esc_js( $options['blacklist'] ); ?> ];
+			window.YETT_WHITELIST = [ <?php echo esc_js( $options['whitelist'] ); ?> ]; 
+		</script>
+		<script src='<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-yett.js' ); ?>'></script>
+		<!-- End Yett Manager -->
+		<?php
 	}
 
 	/**

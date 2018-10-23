@@ -21,7 +21,7 @@
 
 	$( window ).load(
 		function() {
-
+		
 			window.cookieconsent.initialise(
 				{
 					'position': customizerCookieOptions.position,
@@ -52,6 +52,8 @@
 						console.log( 'Simple Cookie Control: ', this.hasConsented() ? 'Accepted cookies' : 'Rejected Cookies' );
 						if ( 'deny' === status ) {
 							deleteSecundaryCookies(); }
+						if ( customizerCookieOptions.yett && this.hasConsented() ) {
+							window.yett.unblock(); }
 						if ( customizerCookieOptions.reload ) {
 							location.reload(); }
 					},
