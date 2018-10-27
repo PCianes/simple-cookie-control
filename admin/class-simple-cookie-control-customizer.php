@@ -680,7 +680,7 @@ class Simple_Cookie_Control_Customizer {
 			'customizer_simple_cookie_control[scritpsBlocked]',
 			array(
 				'label'       => esc_html__( '<scripts> to try to block', 'simple-cookie-control' ),
-				'description' => esc_html__( 'Set comma separated list of JS file names: search it into the src of the <scripts> you want to block.', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Set comma separated list of words, absolute or relative urls, or only JS file names to allow this plugin to search them into the src of the <scripts> you want to block. Please be carefoul with this!', 'simple-cookie-control' ),
 				'section'     => $section,
 				'priority'    => 3,
 				'type'        => 'textarea',

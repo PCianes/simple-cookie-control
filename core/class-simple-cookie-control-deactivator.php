@@ -22,13 +22,19 @@
 class Simple_Cookie_Control_Deactivator {
 
 	/**
-	 * Short Description. (use period)
+	 * Action to run during the plugin's deactivation.
 	 *
-	 * Long Description.
+	 * Set to false Yett extra control which prevents the execution of third party scripts
+	 * since it can give problems depending on the configuration given by the user
 	 *
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
+
+		$options = get_option( 'customizer_simple_cookie_control' );
+		$options['yett'] = false;
+
+		update_option( 'customizer_simple_cookie_control', $options );
 
 	}
 

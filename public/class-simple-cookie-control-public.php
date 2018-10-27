@@ -185,7 +185,7 @@ class Simple_Cookie_Control_Public {
 	public function cookie_control_iframe( $atts ) {
 		
 		$main_options = get_option( 'customizer_simple_cookie_control' );
-		$main_cookie_value = 'allow';
+		$value_of_cookie_control = 'allow';
 
 		extract(
 			shortcode_atts(
@@ -202,10 +202,10 @@ class Simple_Cookie_Control_Public {
 			)
 		);
 
-		if ( $main_cookie_value === $_COOKIE[ $main_cookie_name ] || $main_cookie_value === $_COOKIE[ $cookie_name ] ) {
-			return '<iframe width="' . (int) $width . '" height="' . (int) $height . '" src="' . esc_url( $iframe ) . '" frameborder="0" allowfullscreen></iframe>' . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_html( $cookie_name ), esc_html( $main_cookie_value ) );
+		if ( $value_of_cookie_control === $_COOKIE[ $main_options['cookieName'] ] || $value_of_cookie_control === $_COOKIE[ $cookie_name ] ) {
+			return '<iframe width="' . (int) $width . '" height="' . (int) $height . '" src="' . esc_url( $iframe ) . '" frameborder="0" allowfullscreen></iframe>' . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_html( $cookie_name ), esc_html( $value_of_cookie_control ) );
 		} else {
-			return sprintf( '<img id="%s" src="%s"/><button type="button" class="scc-secundary-banner" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $id ), esc_url( $img ), esc_html( $cookie_name ), esc_html( $main_cookie_value ), esc_html( $message ) );
+			return sprintf( '<img id="%s" src="%s"/><button type="button" class="scc-secundary-banner" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $id ), esc_url( $img ), esc_html( $cookie_name ), esc_html( $value_of_cookie_control ), esc_html( $message ) );
 		}
 
 	}
@@ -240,11 +240,11 @@ class Simple_Cookie_Control_Public {
 	 * Return shortcode by parameters
 	 *
 	 * @since    1.0.0
-	 * @param      string $main_cookie_value    The value of the cookie to check
+	 * @param      string $value_of_cookie_control    The value of cookie control: 'allow' or 'deny'
 	 * @param      array  $atts                  The attributes of the shortcode
 	 * @param      string $content              The content of the shortcode
 	 */
-	private function return_shortcode_by_cookie_control( $main_cookie_value, $atts, $content ) {
+	private function return_shortcode_by_cookie_control( $value_of_cookie_control, $atts, $content ) {
 
 		$main_options = get_option( 'customizer_simple_cookie_control' );
 
@@ -260,10 +260,44 @@ class Simple_Cookie_Control_Public {
 			)
 		);
 
-		if ( $main_cookie_value === $_COOKIE[ $main_options['cookieName'] ] || $main_cookie_value === $_COOKIE[ $cookie_name ] ) {
-			return do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_attr( $cookie_name ), esc_attr( $main_cookie_value) );
+		/**
+		 * Set the HTML to output with this function
+		 */
+		$output_content = do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_attr( $cookie_name ), esc_attr( $value_of_cookie_control) );
+		$output_button = sprintf( '<button type="button" class="scc-secundary-banner %s" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $class ), esc_attr( $cookie_name ), esc_attr( $value_of_cookie_control ), esc_html( $message ) );
+
+		/**
+		 * Put under new variables the value of cookies for a better understanding
+		*/
+		$main_cookie_name = $main_options['cookieName'];
+		$main_cookie_value = $_COOKIE[ $main_cookie_name ];
+		$secundary_cookie_value = $_COOKIE[ $cookie_name ];
+
+		/**
+		 * Early return if all is allow under main cookie
+		 */
+		if ( 'allow' === $main_cookie_value ) {
+			if( 'allow' === $value_of_cookie_control ){ return $output_content; }
+			if( 'deny' === $value_of_cookie_control ){ return ''; }
+		}
+
+		/**
+		 * In case of deny control and we are not under main cookie
+		 * check control only under allow secundary cookie
+		 */
+		if ( ( 'deny' === $value_of_cookie_control ) && ( $main_cookie_name != $cookie_name )  && ( 'allow' === $secundary_cookie_value ) ) { 
+			if ( 'true' === $banner ) { return $output_button; } else { return ''; }
+		}
+
+		/**
+		 * Check all other situations: not decision yet, main cookie and secundary cookies
+		 */
+		$check_deny_not_decision = ( 'deny' === $value_of_cookie_control ) && ( ! isset( $main_cookie_value ) );
+
+		if ( $check_deny_not_decision || $value_of_cookie_control === $main_cookie_value || $value_of_cookie_control === $secundary_cookie_value ) {
+			return $output_content;
 		} elseif ( 'true' === $banner ) {
-			return sprintf( '<button type="button" class="scc-secundary-banner %s" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $class ), esc_attr( $cookie_name ), esc_attr( $main_cookie_value ), esc_html( $message ) );
+			return $output_button;
 		}
 
 	}
