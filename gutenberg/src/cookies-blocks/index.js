@@ -11,7 +11,7 @@ import './editor.scss';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { InnerBlocks, InspectorControls } = wp.editor;
-const { RadioControl, TextareaControl, TextControl, PanelBody, PanelRow } = wp.components;
+const { ToggleControl, RadioControl, TextareaControl, TextControl, PanelBody, PanelRow } = wp.components;
 
 /**
  * Register block
@@ -29,6 +29,10 @@ export default registerBlockType(
             __( 'block content', 'simple-cookie-control' ),
         ],
         attributes: {
+            bannerCookieControl: {
+                type: 'boolean',
+                default: true,
+            },
             typeCookieControl: {
                 type: 'string',
                 default: 'SCC_ALLOW',
@@ -39,7 +43,7 @@ export default registerBlockType(
             },
             cookieValue: {
                 type: 'string',
-                default: 'allow'
+                default: 'allow',
             },
             message: {
                 type: 'string',
@@ -51,8 +55,8 @@ export default registerBlockType(
             },
         },
         edit( { attributes, className, setAttributes } ) {
-            const { typeCookieControl, cookieName, cookieValue, message, cookieClass } = attributes;
-            let borderClass;
+            const { bannerCookieControl, typeCookieControl, cookieName, cookieValue, message, cookieClass } = attributes;
+            let borderClass, tempCookieName;
             switch ( typeCookieControl ) {
                 case 'SCC_ALLOW':
                     borderClass = 'scc-border-allow';
@@ -72,10 +76,25 @@ export default registerBlockType(
                                     { label: 'SHOW AFTER OK COOKIES: show the content only when cookies have been accepted.', value: 'SCC_ALLOW' },
                                     { label: 'SHOW BEFORE OK COOKIES: show the content only when cookies have not been yet accepted (or even are rejected).', value: 'SCC_DENY' },
                                 ] }
-                                onChange={ typeCookieControl => setAttributes( { typeCookieControl } ) }
+                                onChange={ typeCookieControl => {
+                                    switch ( typeCookieControl ) {
+                                        case 'SCC_ALLOW':
+                                        tempCookieName = 'allow';
+                                            break;             
+                                        case 'SCC_DENY':
+                                        tempCookieName = 'deny';
+                                            break;
+                                    };
+                                    setAttributes( { typeCookieControl, cookieValue : tempCookieName } );
+                                } }
+                            />
+                            <ToggleControl
+                                label={ __( 'Show or not a secundary banner as button.', 'simple-cookie-control' ) }
+                                checked={ bannerCookieControl }
+                                onChange={ bannerCookieControl => setAttributes( { bannerCookieControl } ) }
                             />
                         </PanelBody>
-                        { 'SCC_ALLOW' === typeCookieControl && (
+                        { bannerCookieControl && (
                             <PanelBody>
                                 <TextareaControl
                                     label={ __( 'Enter your message to cookie banner here:', 'simple-cookie-control' ) }
@@ -121,12 +140,12 @@ export default registerBlockType(
                 </div>
             );
         },
-        save( { attributes : { typeCookieControl, cookieName, cookieValue, message, cookieClass } } ) {
+        save( { attributes : { bannerCookieControl, typeCookieControl, cookieName, cookieValue, message, cookieClass } } ) {
             return (
                 <div>
-                    <span>[{ typeCookieControl } message="{ message }" cookie_name="{ cookieName }" cookie_value="{ cookieValue }" class="{ cookieClass }"]</span>
+                    <span>[{ typeCookieControl } banner="{ bannerCookieControl ? 'true' : 'false' }" message="{ message }" cookie_name="{ cookieName }" cookie_value="{ cookieValue }" class="{ cookieClass }"]</span>
                         <InnerBlocks.Content />
-                    <span>[/{ typeCookieControl }]</span>  
+                    <span>[/{ typeCookieControl }]</span>
                 </div>
             )
         },

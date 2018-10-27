@@ -256,6 +256,7 @@ class Simple_Cookie_Control_Public {
 					'cookie_name'  => $main_options['cookieName'],
 					'cookie_value' => $main_cookie_value,
 					'class'		=> 'scc-secundary-cookie-button',
+					'banner'	=> 'true',
 				),
 				$atts
 			)
@@ -263,7 +264,7 @@ class Simple_Cookie_Control_Public {
 
 		if ( $main_cookie_value === $_COOKIE[ $main_options['cookieName'] ] || $cookie_value === $_COOKIE[ $cookie_name ] ) {
 			return do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_attr( $cookie_name ), esc_attr( $cookie_value ) );
-		} else {
+		} elseif ( 'true' === $banner ) {
 			return sprintf( '<button type="button" class="scc-secundary-banner %s" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $class ), esc_attr( $cookie_name ), esc_attr( $cookie_value ), esc_html( $message ) );
 		}
 

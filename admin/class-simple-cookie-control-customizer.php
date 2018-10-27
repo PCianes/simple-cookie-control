@@ -588,7 +588,7 @@ class Simple_Cookie_Control_Customizer {
 			'customizer_simple_cookie_control[googleManagerID]',
 			array(
 				'label'       => esc_html__( 'Google Tag Manager ID', 'simple-cookie-control' ),
-				'description' => esc_html__( 'Set your ID of Google Tag Manager to insert your own analytics scripts.', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Set your ID of Google Tag Manager.', 'simple-cookie-control' ),
 				'section'     => $section,
 				'priority'    => 4,
 				'type'        => 'text',
