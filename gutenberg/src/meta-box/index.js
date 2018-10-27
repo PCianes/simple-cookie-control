@@ -20,7 +20,7 @@ export default registerBlockType(
     {
         title: __( 'Example - Meta Box', 'simple-cookie-control' ),
         description: __( 'An example of how to build a block with a meta box field.', 'simple-cookie-control'),
-        category: 'simple-cookie-control',
+        category: 'sumapress',
         supports: {
             multiple: false,
         },

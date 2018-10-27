@@ -247,23 +247,24 @@ class Simple_Cookie_Control_Public {
 	 */
 	private function return_shortcode_by_cookie_control( $main_cookie_value, $atts, $content ) {
 
-		$main_cookie_name = get_option( 'customizer_simple_cookie_control' )['cookieName'];
+		$main_options = get_option( 'customizer_simple_cookie_control' );
 
 		extract(
 			shortcode_atts(
 				array(
-					'message'      => get_option( 'customizer_simple_cookie_control' )['contentMessage'],
-					'cookie_name'  => $main_cookie_name,
+					'message'      => $main_options['contentMessage'],
+					'cookie_name'  => $main_options['cookieName'],
 					'cookie_value' => $main_cookie_value,
+					'class'		=> 'scc-secundary-cookie-button',
 				),
 				$atts
 			)
 		);
 
-		if ( $main_cookie_value === $_COOKIE[ $main_cookie_name ] || $cookie_value === $_COOKIE[ $cookie_name ] ) {
-			return do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_html( $cookie_name ), esc_html( $cookie_value ) );
+		if ( $main_cookie_value === $_COOKIE[ $main_options['cookieName'] ] || $cookie_value === $_COOKIE[ $cookie_name ] ) {
+			return do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_attr( $cookie_name ), esc_attr( $cookie_value ) );
 		} else {
-			return sprintf( '<button type="button" class="scc-secundary-banner" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_html( $cookie_name ), esc_html( $cookie_value ), esc_html( $message ) );
+			return sprintf( '<button type="button" class="scc-secundary-banner %s" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $class ), esc_attr( $cookie_name ), esc_attr( $cookie_value ), esc_html( $message ) );
 		}
 
 	}

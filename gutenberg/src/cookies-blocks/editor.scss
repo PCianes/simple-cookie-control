@@ -1,0 +1,12 @@
+.wp-block-simple-cookie-control-inner-blocks {
+    padding: 10px;
+
+    &.scc-border-allow {
+        border: 2px solid green;
+    }
+
+    &.scc-border-deny {
+        border: 2px solid red;
+    }
+
+}

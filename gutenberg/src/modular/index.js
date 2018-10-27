@@ -32,7 +32,7 @@ export default registerBlockType(
     {
         title: __( 'Example - Inspector Fields', 'simple-cookie-control' ),
         description: __( 'An example of how to use form fields in the Inspector element.', 'simple-cookie-control'),
-        category: 'simple-cookie-control',
+        category: 'sumapress',
         icon: {
             background: 'rgba(254, 243, 224, 0.52)',
             src: icon,

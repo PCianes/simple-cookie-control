@@ -27,7 +27,7 @@ export default registerBlockType(
     {
         title: __( 'Example - Media Upload Button', 'simple-cookie-control' ),
         description: __( 'An example of how to use the MediaUpload component.', 'simple-cookie-control'),
-        category: 'simple-cookie-control',
+        category: 'sumapress',
         icon: {
             background: 'rgba(254, 243, 224, 0.52)',
             src: icons.upload,

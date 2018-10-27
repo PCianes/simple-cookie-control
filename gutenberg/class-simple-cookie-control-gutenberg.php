@@ -74,19 +74,16 @@ class Simple_Cookie_Control_Gutenberg {
 	 */
 	public function add_custom_blocks_categories( $categories, $post ) {
 
-		if ( $post->post_type !== 'post' ) {
-			return $categories;
+		$custom_category = array(
+			'slug'	=> 'sumapress',
+			'title'	=> esc_html__( 'SumaPress', 'simple-cookie-control' ),
+		);
+
+		if ( false === array_search( $custom_category['slug'], array_column( $categories, 'slug' ) ) ) {
+			return array_merge( $categories, array(	$custom_category ) );
 		}
 
-		return array_merge(
-			$categories,
-			array(
-				array(
-					'slug' => 'simple-cookie-control',
-					'title' => __( 'Simple_Cookie_Control', 'simple-cookie-control' ),
-				),
-			)
-		);
+		return $categories;
 	}
 
 	/**
@@ -96,12 +93,22 @@ class Simple_Cookie_Control_Gutenberg {
 	 */
 	public function enqueue_all_blocks_assets_editor() {
 
-		wp_enqueue_script(
+		wp_register_script(
 			'simple-cookie-control-gutenberg-editor',
 			plugin_dir_url( __FILE__ ) . 'dist/blocks.build.js',
 			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
 			filemtime( plugin_dir_path( __FILE__ ) . 'dist/blocks.build.js' )
 		);
+
+		$main_options = get_option( 'customizer_simple_cookie_control' );
+
+		$data_to_gutenberg = array(
+			'name'		=> $main_options['cookieName'],
+			'message'	=> $main_options['contentMessage']
+		);
+
+		wp_localize_script( 'simple-cookie-control-gutenberg-editor', 'sccMainCookieData', $data_to_gutenberg );
+		wp_enqueue_script( 'simple-cookie-control-gutenberg-editor' );
 
 		wp_enqueue_style(
 			'simple-cookie-control-gutenberg-editor',
