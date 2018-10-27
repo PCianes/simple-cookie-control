@@ -33,7 +33,6 @@
     	<li><strong><?php esc_html_e( 'Attributes for [SCC_ALLOW], [SCC_DENY], [SCC_IFRAME] ', 'simple-cookie-control' ); ?>:</strong></li>
         <li><strong>message=</strong>"<?php esc_html_e( 'message to show like a button to allow user to accept cookies of these shortcodes restring content', 'simple-cookie-control' ); ?>"</li>
         <li><strong>cookie_name=</strong>"<?php esc_html_e( "define a cookie if you want allow partial acceptance even though the main banner's cookies have been rejected", 'simple-cookie-control' ); ?>"</li>
-        <li><strong>cookie_value=</strong>"<?php esc_html_e( 'define cookie value for your custom cookie', 'simple-cookie-control' ); ?>"</li>
         <li><strong>banner=</strong>"<?php esc_html_e( "define 'true'(default) or 'false' to show or not a secundary banner as button.", 'simple-cookie-control' ); ?>"</li>
     </ul>
     <ul>

@@ -41,10 +41,6 @@ export default registerBlockType(
                 type: 'string',
                 default: sccMainCookieData.name
             },
-            cookieValue: {
-                type: 'string',
-                default: 'allow',
-            },
             message: {
                 type: 'string',
                 default: sccMainCookieData.message
@@ -55,7 +51,7 @@ export default registerBlockType(
             },
         },
         edit( { attributes, className, setAttributes } ) {
-            const { bannerCookieControl, typeCookieControl, cookieName, cookieValue, message, cookieClass } = attributes;
+            const { bannerCookieControl, typeCookieControl, cookieName, message, cookieClass } = attributes;
             let borderClass, tempCookieName;
             switch ( typeCookieControl ) {
                 case 'SCC_ALLOW':
@@ -76,17 +72,7 @@ export default registerBlockType(
                                     { label: 'SHOW AFTER OK COOKIES: show the content only when cookies have been accepted.', value: 'SCC_ALLOW' },
                                     { label: 'SHOW BEFORE OK COOKIES: show the content only when cookies have not been yet accepted (or even are rejected).', value: 'SCC_DENY' },
                                 ] }
-                                onChange={ typeCookieControl => {
-                                    switch ( typeCookieControl ) {
-                                        case 'SCC_ALLOW':
-                                        tempCookieName = 'allow';
-                                            break;             
-                                        case 'SCC_DENY':
-                                        tempCookieName = 'deny';
-                                            break;
-                                    };
-                                    setAttributes( { typeCookieControl, cookieValue : tempCookieName } );
-                                } }
+                                onChange={ typeCookieControl => setAttributes( { typeCookieControl } ) }
                             />
                             <ToggleControl
                                 label={ __( 'Show or not a secundary banner as button.', 'simple-cookie-control' ) }
@@ -113,7 +99,7 @@ export default registerBlockType(
                         { 'SCC_DENY' === typeCookieControl && (
                             <PanelBody>
                                 <PanelRow>
-                                    <p>{ __( 'Remember to indicate the same cookie values that you have chosen in another block ( SHOW AFTER OK COOKIES ) if you want them to be displayed / hidden under the same cookie control.', 'simple-cookie-control' ) }</p>
+                                    <p>{ __( 'Remember to indicate the same cookie name that you have chosen in another block ( SHOW AFTER OK COOKIES ) if you want them to be displayed / hidden under the same cookie control.', 'simple-cookie-control' ) }</p>
                                 </PanelRow>
                             </PanelBody>
                         ) }
@@ -123,12 +109,6 @@ export default registerBlockType(
                                 help={ __( "Define other cookie if you want allow partial acceptance even though the main banner's cookies have been rejected.", 'simple-cookie-control' ) }
                                 value={ cookieName }
                                 onChange={ cookieName => setAttributes( { cookieName } ) }
-                            />
-                            <TextControl
-                                label={ __( 'Cookie value (optional)', 'simple-cookie-control' ) }
-                                help={ __( 'Define cookie value for your custom cookie.', 'simple-cookie-control' ) }
-                                value={ cookieValue }
-                                onChange={ cookieValue => setAttributes( { cookieValue } ) }
                             />
                         </PanelBody>
                     </InspectorControls>
@@ -140,10 +120,10 @@ export default registerBlockType(
                 </div>
             );
         },
-        save( { attributes : { bannerCookieControl, typeCookieControl, cookieName, cookieValue, message, cookieClass } } ) {
+        save( { attributes : { bannerCookieControl, typeCookieControl, cookieName, message, cookieClass } } ) {
             return (
                 <div>
-                    <span>[{ typeCookieControl } banner="{ bannerCookieControl ? 'true' : 'false' }" message="{ message }" cookie_name="{ cookieName }" cookie_value="{ cookieValue }" class="{ cookieClass }"]</span>
+                    <span>[{ typeCookieControl } banner="{ bannerCookieControl ? 'true' : 'false' }" message="{ message }" cookie_name="{ cookieName }" class="{ cookieClass }"]</span>
                         <InnerBlocks.Content />
                     <span>[/{ typeCookieControl }]</span>
                 </div>

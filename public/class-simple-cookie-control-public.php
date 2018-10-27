@@ -183,8 +183,8 @@ class Simple_Cookie_Control_Public {
 	 * @param      array $atts       The attributes of the shortcode
 	 */
 	public function cookie_control_iframe( $atts ) {
-
-		$main_cookie_name  = get_option( 'customizer_simple_cookie_control' )['cookieName'];
+		
+		$main_options = get_option( 'customizer_simple_cookie_control' );
 		$main_cookie_value = 'allow';
 
 		extract(
@@ -195,18 +195,17 @@ class Simple_Cookie_Control_Public {
 					'id'           => 'scc-iframe',
 					'iframe'       => '#',
 					'img'          => '#',
-					'message'      => get_option( 'customizer_simple_cookie_control' )['contentMessage'],
-					'cookie_name'  => $main_cookie_name,
-					'cookie_value' => $main_cookie_value,
+					'message'      => $main_options['contentMessage'],
+					'cookie_name'  => $main_options['cookieName'],
 				),
 				$atts
 			)
 		);
 
-		if ( $main_cookie_value === $_COOKIE[ $main_cookie_name ] || $cookie_value === $_COOKIE[ $cookie_name ] ) {
-			return '<iframe width="' . (int) $width . '" height="' . (int) $height . '" src="' . esc_url( $iframe ) . '" frameborder="0" allowfullscreen></iframe>' . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_html( $cookie_name ), esc_html( $cookie_value ) );
+		if ( $main_cookie_value === $_COOKIE[ $main_cookie_name ] || $main_cookie_value === $_COOKIE[ $cookie_name ] ) {
+			return '<iframe width="' . (int) $width . '" height="' . (int) $height . '" src="' . esc_url( $iframe ) . '" frameborder="0" allowfullscreen></iframe>' . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_html( $cookie_name ), esc_html( $main_cookie_value ) );
 		} else {
-			return sprintf( '<img id="%s" src="%s"/><button type="button" class="scc-secundary-banner" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $id ), esc_url( $img ), esc_html( $cookie_name ), esc_html( $cookie_value ), esc_html( $message ) );
+			return sprintf( '<img id="%s" src="%s"/><button type="button" class="scc-secundary-banner" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $id ), esc_url( $img ), esc_html( $cookie_name ), esc_html( $main_cookie_value ), esc_html( $message ) );
 		}
 
 	}
@@ -238,7 +237,7 @@ class Simple_Cookie_Control_Public {
 	}
 
 	/**
-	 * Return shortcode by $cookie_value and main cookie control
+	 * Return shortcode by parameters
 	 *
 	 * @since    1.0.0
 	 * @param      string $main_cookie_value    The value of the cookie to check
@@ -254,7 +253,6 @@ class Simple_Cookie_Control_Public {
 				array(
 					'message'      => $main_options['contentMessage'],
 					'cookie_name'  => $main_options['cookieName'],
-					'cookie_value' => $main_cookie_value,
 					'class'		=> 'scc-secundary-cookie-button',
 					'banner'	=> 'true',
 				),
@@ -262,10 +260,10 @@ class Simple_Cookie_Control_Public {
 			)
 		);
 
-		if ( $main_cookie_value === $_COOKIE[ $main_options['cookieName'] ] || $cookie_value === $_COOKIE[ $cookie_name ] ) {
-			return do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_attr( $cookie_name ), esc_attr( $cookie_value ) );
+		if ( $main_cookie_value === $_COOKIE[ $main_options['cookieName'] ] || $main_cookie_value === $_COOKIE[ $cookie_name ] ) {
+			return do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_attr( $cookie_name ), esc_attr( $main_cookie_value) );
 		} elseif ( 'true' === $banner ) {
-			return sprintf( '<button type="button" class="scc-secundary-banner %s" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $class ), esc_attr( $cookie_name ), esc_attr( $cookie_value ), esc_html( $message ) );
+			return sprintf( '<button type="button" class="scc-secundary-banner %s" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $class ), esc_attr( $cookie_name ), esc_attr( $main_cookie_value ), esc_html( $message ) );
 		}
 
 	}
