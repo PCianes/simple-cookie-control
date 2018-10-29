@@ -69,50 +69,6 @@ class Simple_Cookie_Control_Admin {
 	}
 
 	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Cookie_Control_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Cookie_Control_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-admin.min.css', array(), $this->version, 'all' );
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Cookie_Control_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Cookie_Control_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-admin.min.js', array( 'jquery' ), $this->version, false );
-	}
-
-	/**
 	 * Add setting link to customizer on plugins table
 	 *
 	 * @since    1.0.0
@@ -125,7 +81,6 @@ class Simple_Cookie_Control_Admin {
 
 	}
 
-
 	/**
 	 * Add new input into database about the choice of the user in relation to allow or not the cookies
 	 * Action from Ajax by simple-cookie-control-public.js
@@ -136,7 +91,7 @@ class Simple_Cookie_Control_Admin {
 
 		check_ajax_referer( 'simple_cookie_control_nonce_customizer', 'security' );
 
-		$choice = ! empty( $_POST['choice'] ) ? $_POST['choice'] : false;
+		$choice = ! empty( $_POST['choice'] ) ? sanitize_text_field( $_POST['choice'] ) : false;
 
 		if ( $choice ) {
 			$current_analytics = get_option( 'analytics_simple_cookie_control' );
@@ -185,6 +140,7 @@ class Simple_Cookie_Control_Admin {
 		header( 'Content-type: application/json' );
 		echo json_encode( true );
 		die;
+
 	}
 
 }

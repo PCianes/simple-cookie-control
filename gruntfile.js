@@ -21,12 +21,14 @@ module.exports = function(grunt) {
 				src: 'languages/*.po',
 				expand: true,
 			},
-		}
+		},
 
 		uglify: {
 			my_target: {
 				files: {
-					'admin/js/simple-cookie-control-admin.min.js': ['admin/js/simple-cookie-control-admin.js'],
+					'admin/js/simple-cookie-control-customizer-controls.min.js': ['admin/js/simple-cookie-control-customizer-controls.js'],
+					'admin/js/simple-cookie-control-customizer-preview.min.js': ['admin/js/simple-cookie-control-customizer-preview.js'],
+					'public/js/cookieconsent.min.js': ['public/js/cookieconsent.js'],
 					'public/js/simple-cookie-control-public.min.js': ['public/js/simple-cookie-control-public.js'],
 				}
 			}
@@ -39,8 +41,7 @@ module.exports = function(grunt) {
 			},
 			target: {
 				files: {
-					'admin/css/simple-cookie-control-admin.min.css': ['admin/css/simple-cookie-control-admin.css'],
-					//'public/css/simple-cookie-control-public.min.css': ['public/css/simple-cookie-control-public.css'],
+					'admin/css/simple-cookie-control-customizer-controls.min.css': ['admin/css/simple-cookie-control-customizer-controls.css'],
 				}
 			}
 		},

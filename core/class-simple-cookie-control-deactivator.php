@@ -31,7 +31,7 @@ class Simple_Cookie_Control_Deactivator {
 	 */
 	public static function deactivate() {
 
-		$options = get_option( 'customizer_simple_cookie_control' );
+		$options         = get_option( 'customizer_simple_cookie_control' );
 		$options['yett'] = false;
 
 		update_option( 'customizer_simple_cookie_control', $options );

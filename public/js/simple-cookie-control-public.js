@@ -1,7 +1,7 @@
 (function( $ ) {
 	'use strict';
 
-	let palette = ! customizerCookieOptions.colors ? null : {
+	var palette = ! customizerCookieOptions.colors ? null : {
 		'popup': {
 			'background': customizerCookieOptions.popupBackgroundColor,
 			'text': customizerCookieOptions.popupTextColor,
@@ -21,7 +21,7 @@
 
 	$( window ).load(
 		function() {
-		
+
 			window.cookieconsent.initialise(
 				{
 					'position': customizerCookieOptions.position,

@@ -40,6 +40,15 @@ class Simple_Cookie_Control_Public {
 	private $version;
 
 	/**
+	 * The options of this plugin from customizer.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      array    $options    The current options of this plugin.
+	 */
+	private $options;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -50,21 +59,7 @@ class Simple_Cookie_Control_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
-		$this->load_dependencies();
-	}
-
-	/**
-	 * Load the required dependencies for the Public facing functionality.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function load_dependencies() {
-		/**
-		 * The class responsible for ...
-		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-simple-cookie-control-class-name.php'; .
+		$this->options     = get_option( 'customizer_simple_cookie_control' );
 	}
 
 	/**
@@ -74,21 +69,9 @@ class Simple_Cookie_Control_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Simple_Cookie_Control_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Simple_Cookie_Control_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-public.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cookieconsent.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'cookieconsent', plugin_dir_url( __FILE__ ) . 'css/cookieconsent.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'dashicons' );
+
 	}
 
 	/**
@@ -98,12 +81,12 @@ class Simple_Cookie_Control_Public {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( 'cookieconsent', plugin_dir_url( __FILE__ ) . 'js/cookieconsent.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'cookieconsent', plugin_dir_url( __FILE__ ) . 'js/cookieconsent.min.js', array( 'jquery' ), $this->version, false );
 
-		$options             = get_option( 'customizer_simple_cookie_control' );
+		$options             = $this->options;
 		$options['security'] = wp_create_nonce( 'simple_cookie_control_nonce_customizer' );
 
-		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-public.js', array( 'cookieconsent', 'jquery' ), $this->version, false );
+		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-public.min.js', array( 'cookieconsent', 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name, 'customizerCookieOptions', $options );
 		wp_enqueue_script( $this->plugin_name );
 
@@ -115,18 +98,18 @@ class Simple_Cookie_Control_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_yett_scripts() {
-		$options  = get_option( 'customizer_simple_cookie_control' );
+		$options = $this->options;
 		?>
 		<!-- Yett Manager -->
 		<script>
 			window.YETT_BLACKLIST = [ <?php echo esc_js( $options['blacklist'] ); ?> ];
 			window.YETT_WHITELIST = [ <?php echo esc_js( $options['whitelist'] ); ?> ]; 
 		</script>
-		<script src='<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-yett.js' ); ?>'></script>
+		<script src='<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-yett.min.js' ); ?>'></script>
 		<!-- End Yett Manager -->
 		<?php
 	}
-	
+
 	/**
 	 * Add attribute 'javascript/bloked' to some scripts to allow Yet block them
 	 *
@@ -134,14 +117,14 @@ class Simple_Cookie_Control_Public {
 	 */
 	function add_block_attribute_to_scripts( $tag, $handle, $src ) {
 
-		$files_names_to_block = explode( ',', get_option( 'customizer_simple_cookie_control' )['scritpsBlocked'] );
-			
+		$files_names_to_block = explode( ',', $this->options['scritpsBlocked'] );
+
 		foreach ( $files_names_to_block as $file_name ) {
-			if( strrpos( $src, trim( $file_name ) ) !== false ){
+			if ( strrpos( $src, trim( $file_name ) ) !== false ) {
 				return '<script type="javascript/bloked" src="' . esc_url( $src ) . '></script>';
 			}
 		}
-		
+
 		return $tag;
 	}
 
@@ -157,7 +140,7 @@ class Simple_Cookie_Control_Public {
 		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','<?php echo esc_js( get_option( 'customizer_simple_cookie_control' )['googleManagerID'] ); ?>');</script>
+		})(window,document,'script','dataLayer','<?php echo esc_js( $this->options['googleManagerID'] ); ?>');</script>
 		<!-- End Google Tag Manager -->
 		<?php
 	}
@@ -170,7 +153,7 @@ class Simple_Cookie_Control_Public {
 	public function enqueue_body_google_scripts() {
 		?>
 		<!-- Google Tag Manager (noscript) -->
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo esc_js( get_option( 'customizer_simple_cookie_control' )['googleManagerID'] ); ?>"
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo esc_js( $this->options['googleManagerID'] ); ?>"
 		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<!-- End Google Tag Manager (noscript) -->
 		<?php
@@ -183,26 +166,26 @@ class Simple_Cookie_Control_Public {
 	 * @param      array $atts       The attributes of the shortcode
 	 */
 	public function cookie_control_iframe( $atts ) {
-		
-		$main_options = get_option( 'customizer_simple_cookie_control' );
+
+		$options                 = $this->options;
 		$value_of_cookie_control = 'allow';
 
 		extract(
 			shortcode_atts(
 				array(
-					'width'        => '600',
-					'height'       => '450',
-					'id'           => 'scc-iframe',
-					'iframe'       => '#',
-					'img'          => '#',
-					'message'      => $main_options['contentMessage'],
-					'cookie_name'  => $main_options['cookieName'],
+					'width'       => '600',
+					'height'      => '450',
+					'id'          => 'scc-iframe',
+					'iframe'      => '#',
+					'img'         => '#',
+					'message'     => $options['contentMessage'],
+					'cookie_name' => $options['cookieName'],
 				),
 				$atts
 			)
 		);
 
-		if ( $value_of_cookie_control === $_COOKIE[ $main_options['cookieName'] ] || $value_of_cookie_control === $_COOKIE[ $cookie_name ] ) {
+		if ( $value_of_cookie_control === $_COOKIE[ $options['cookieName'] ] || $value_of_cookie_control === $_COOKIE[ $cookie_name ] ) {
 			return '<iframe width="' . (int) $width . '" height="' . (int) $height . '" src="' . esc_url( $iframe ) . '" frameborder="0" allowfullscreen></iframe>' . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_html( $cookie_name ), esc_html( $value_of_cookie_control ) );
 		} else {
 			return sprintf( '<img id="%s" src="%s"/><button type="button" class="scc-secundary-banner" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $id ), esc_url( $img ), esc_html( $cookie_name ), esc_html( $value_of_cookie_control ), esc_html( $message ) );
@@ -246,15 +229,15 @@ class Simple_Cookie_Control_Public {
 	 */
 	private function return_shortcode_by_cookie_control( $value_of_cookie_control, $atts, $content ) {
 
-		$main_options = get_option( 'customizer_simple_cookie_control' );
+		$options = $this->options;
 
 		extract(
 			shortcode_atts(
 				array(
-					'message'      => $main_options['contentMessage'],
-					'cookie_name'  => $main_options['cookieName'],
-					'class'		=> 'scc-secundary-cookie-button',
-					'banner'	=> 'true',
+					'message'     => $options['contentMessage'],
+					'cookie_name' => $options['cookieName'],
+					'class'       => 'scc-secundary-cookie-button',
+					'banner'      => 'true',
 				),
 				$atts
 			)
@@ -263,30 +246,35 @@ class Simple_Cookie_Control_Public {
 		/**
 		 * Set the HTML to output with this function
 		 */
-		$output_content = do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_attr( $cookie_name ), esc_attr( $value_of_cookie_control) );
-		$output_button = sprintf( '<button type="button" class="scc-secundary-banner %s" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $class ), esc_attr( $cookie_name ), esc_attr( $value_of_cookie_control ), esc_html( $message ) );
+		$output_content = do_shortcode( $content ) . sprintf( '<span class="scc-secundary-deny" data-cookie-name="%s" data-cookie-value="%s" style="display: none;"></span>', esc_attr( $cookie_name ), esc_attr( $value_of_cookie_control ) );
+		$output_button  = sprintf( '<button type="button" class="scc-secundary-banner %s" data-cookie-name="%s" data-cookie-value="%s">%s</button>', esc_attr( $class ), esc_attr( $cookie_name ), esc_attr( $value_of_cookie_control ), esc_html( $message ) );
 
 		/**
 		 * Put under new variables the value of cookies for a better understanding
 		*/
-		$main_cookie_name = $main_options['cookieName'];
-		$main_cookie_value = $_COOKIE[ $main_cookie_name ];
+		$main_cookie_name       = $options['cookieName'];
+		$main_cookie_value      = $_COOKIE[ $main_cookie_name ];
 		$secundary_cookie_value = $_COOKIE[ $cookie_name ];
 
 		/**
 		 * Early return if all is allow under main cookie
 		 */
 		if ( 'allow' === $main_cookie_value ) {
-			if( 'allow' === $value_of_cookie_control ){ return $output_content; }
-			if( 'deny' === $value_of_cookie_control ){ return ''; }
+			if ( 'allow' === $value_of_cookie_control ) {
+				return $output_content; }
+			if ( 'deny' === $value_of_cookie_control ) {
+				return ''; }
 		}
 
 		/**
 		 * In case of deny control and we are not under main cookie
 		 * check control only under allow secundary cookie
 		 */
-		if ( ( 'deny' === $value_of_cookie_control ) && ( $main_cookie_name != $cookie_name )  && ( 'allow' === $secundary_cookie_value ) ) { 
-			if ( 'true' === $banner ) { return $output_button; } else { return ''; }
+		if ( ( 'deny' === $value_of_cookie_control ) && ( $main_cookie_name != $cookie_name ) && ( 'allow' === $secundary_cookie_value ) ) {
+			if ( 'true' === $banner ) {
+				return $output_button;
+			} else {
+				return ''; }
 		}
 
 		/**

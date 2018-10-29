@@ -127,14 +127,6 @@ class Simple_Cookie_Control {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'gutenberg/class-simple-cookie-control-gutenberg.php';
 
 		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site and also into admin area, like libraries and helpers
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-simple-cookie-control-includes.php';
-
-		$includes = new Simple_Cookie_Control_Includes( $this->get_plugin_name(), $this->get_version() );
-
-		/**
 		 * Get loader using its singleton
 		 */
 		$this->loader = Simple_Cookie_Control_Loader::get_instance();
@@ -172,8 +164,6 @@ class Simple_Cookie_Control {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Simple_Cookie_Control_Admin( $this->get_plugin_name(), $this->get_version() );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_filter( 'plugin_action_links_simple-cookie-control/simple-cookie-control.php', $plugin_admin, 'settings_link_on_plugins_table' );
 		$this->loader->add_filter( 'wp_ajax_save_user_choice', $plugin_admin, 'add_user_choice_into_db' );
 		$this->loader->add_filter( 'wp_ajax_nopriv_save_user_choice', $plugin_admin, 'add_user_choice_into_db' );
@@ -241,15 +231,9 @@ class Simple_Cookie_Control {
 		$plugin_gutenberg = new Simple_Cookie_Control_Gutenberg( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_gutenberg, 'enqueue_all_blocks_assets_editor' );
-		$this->loader->add_action( 'enqueue_block_assets', $plugin_gutenberg, 'enqueue_all_blocks_assets' );
-		$this->loader->add_action( 'enqueue_block_assets', $plugin_gutenberg, 'enqueue_all_blocks_assets_frontend' );
 
 		$this->loader->add_filter( 'block_categories', $plugin_gutenberg, 'add_custom_blocks_categories', 10, 2 );
-		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_dynamic_blocks' );
-		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_meta_fields' );
-		// $this->loader->add_filter( 'register_post_type_args', $plugin_gutenberg, 'add_templates_to_post_types', 20, 2 );
-		// $this->loader->add_filter( 'allowed_block_types', $plugin_gutenberg, 'allowed_blocks_to_post_types', 20, 2 );
-		// $this->loader->add_action( 'current_screen', $plugin_gutenberg, 'gutenberg_removal' );
+
 	}
 
 	/**

@@ -22,9 +22,7 @@
 class Simple_Cookie_Control_Activator {
 
 	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
+	 * Start with default values about plugin options durgin activation
 	 *
 	 * @since    1.0.0
 	 */
@@ -59,10 +57,10 @@ class Simple_Cookie_Control_Activator {
 			'ajaxUrl'                  => $ajax_url,
 			'reload'                   => true,
 			'internalAnalytics'        => true,
-			'yett'        				=> false,
-			'scritpsBlocked'			=> '',
-			'blacklist'        			=> '',
-			'whitelist'			        => '',
+			'yett'                     => false,
+			'scritpsBlocked'           => '',
+			'blacklist'                => '',
+			'whitelist'                => '',
 		);
 		add_option( 'customizer_simple_cookie_control', $default_options );
 

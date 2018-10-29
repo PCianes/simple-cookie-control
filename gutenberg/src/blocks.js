@@ -12,7 +12,3 @@
 import './i18n.js';
 
 import './cookies-blocks';
-//import './dynamic';
-//import './media-upload';
-//import './meta-box';
-//import './modular';

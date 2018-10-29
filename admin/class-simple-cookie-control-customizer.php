@@ -42,9 +42,9 @@ class Simple_Cookie_Control_Customizer {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string    $data_colors    The defaults colors for the main banner.
 	 */
-	private $colors;
+	private $data_colors;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -120,7 +120,7 @@ class Simple_Cookie_Control_Customizer {
 	 */
 	public function enqueue_scripts_preview_init() {
 
-		wp_enqueue_script( $this->plugin_name . '-customizer-preview', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-preview.js', array( 'jquery', 'customize-preview' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . '-customizer-preview', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-preview.min.js', array( 'jquery', 'customize-preview' ), $this->version, true );
 	}
 
 	/**
@@ -133,7 +133,7 @@ class Simple_Cookie_Control_Customizer {
 		$options             = get_option( 'analytics_simple_cookie_control' );
 		$options['security'] = wp_create_nonce( 'simple_cookie_control_nonce_analytics' );
 
-		wp_register_script( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-controls.js', array( 'jquery' ), $this->version, true );
+		wp_register_script( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'js/simple-cookie-control-customizer-controls.min.js', array( 'jquery' ), $this->version, true );
 		wp_localize_script( $this->plugin_name . '-customizer-controls', 'analyticsCookieOptions', $options );
 		wp_enqueue_script( $this->plugin_name . '-customizer-controls' );
 	}
@@ -145,7 +145,7 @@ class Simple_Cookie_Control_Customizer {
 	 */
 	public function enqueue_styles_controls() {
 
-		wp_enqueue_style( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-customizer-controls.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . '-customizer-controls', plugin_dir_url( __FILE__ ) . 'css/simple-cookie-control-customizer-controls.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -161,7 +161,7 @@ class Simple_Cookie_Control_Customizer {
 			$this->plugin_name,
 			array(
 				'title'       => esc_html__( 'Simple Cookie Control', 'simple-cookie-control' ),
-				'description' => esc_html__( 'Customize Manager for customcookie banner', 'simple-cookie-control' ),
+				'description' => esc_html__( 'Customize Manager for custom cookie banner', 'simple-cookie-control' ),
 				'priority'    => 160,
 				'capability'  => 'manage_options',
 			)
@@ -200,10 +200,11 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_setting(
 			'customizer_simple_cookie_control[position]',
 			array(
-				'type'       => 'option',
-				'capability' => 'manage_options',
-				'default'    => 'bottom',
-				'transport'  => 'postMessage',
+				'type'              => 'option',
+				'capability'        => 'manage_options',
+				'default'           => 'bottom',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
 		$wp_customize->add_control(
@@ -230,10 +231,11 @@ class Simple_Cookie_Control_Customizer {
 		$wp_customize->add_setting(
 			'customizer_simple_cookie_control[theme]',
 			array(
-				'type'       => 'option',
-				'capability' => 'manage_options',
-				'default'    => 'block',
-				'transport'  => 'postMessage',
+				'type'              => 'option',
+				'capability'        => 'manage_options',
+				'default'           => 'block',
+				'transport'         => 'postMessage',
+				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
 		$wp_customize->add_control(

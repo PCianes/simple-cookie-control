@@ -4,7 +4,7 @@
 	$( window ).load(
 		function() {
 
-			let banner = $( "[aria-describedby*='cookieconsent:desc']" );
+			var banner = $( "[aria-describedby*='cookieconsent:desc']" );
 
 			wp.customize(
 				'customizer_simple_cookie_control[position]',
@@ -23,16 +23,16 @@
 								 break;
 								case 'bottom-right':
 									banner.removeClass( 'cc-left cc-banner cc-top' ).addClass( 'cc-bottom cc-right cc-floating' );
-							break;
+								break;
 								case 'top-left':
 									banner.removeClass( 'cc-right cc-banner cc-bottom' ).addClass( 'cc-top cc-left cc-floating' );
-							break;
+								break;
 								case 'top-right':
 									banner.removeClass( 'cc-left cc-banner cc-bottom' ).addClass( 'cc-top cc-right cc-floating' );
-							break;
+								break;
 
 								default:
-							break;
+								break;
 							}
 						}
 					);
@@ -167,7 +167,7 @@
 				function( value ) {
 					value.bind(
 						function( newValue ) {
-							let currentMessage = $( '.cc-message' ),
+							var currentMessage = $( '.cc-message' ),
 							anchorHtml         = currentMessage.html().slice( currentMessage.html().indexOf( '<a aria-label="learn more about cookies"' ) );
 							currentMessage.html( newValue + anchorHtml );
 						}
