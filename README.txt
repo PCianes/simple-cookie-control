@@ -1,115 +1,87 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://sumapress.com
-Tags: comments, spam
+=== Simple Cookie Control ===
+Contributors: sumapress, pablocianes
+Donate link: https://pablocianes.com/
+Tags: cookie, cookie consent, cookie law, GDPR, gutenberg cookie block
 Requires at least: 4.6
-Tested up to: 5.0
+Tested up to: 4.9
 Stable tag: trunk
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+A simple banner to inform users that your site uses cookies and blocks them until the visitor accepts.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+Cookie control and customizable cookie message to comply with the EU cookie law GDPR regulations with following features:
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+    * Cookie banner configurable from the WordPress customizer: position, styles, colors and content.
+    * Show or not a secondary banner after the primary one is hidden: which allow users see again the main banner to change their previous decision.
+    * Activate or not the implementation of basic internal Analytics to know the number of acceptances and rejections.
+    * Change the name and days to expiry of the cookie that keeps track of users choice.
+    * Activate the implementation of Google Tag Manager (Google Analytics): conditional on the acceptance of cookies.
+    
 
-A few notes about the sections above:
+Also with this plugin you can show/hide conditional content depending on the acceptance of cookies with:
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+    * A specific block of Gutenberg: you can show/hide conditional content depending on the acceptance of cookies.
+    * Some shortocodes described in the "Advanced control" inside the WordPress Customizer. Example: [SCC_ALLOW] your content [/SCC_ALLOW]
+    * Some extra advanced options to try force automatically the blocking of some scripts, and with it the control of cookies.
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+Both with the gutenberg block and with the shortcodes this plugin allows you to show or hide content, as well as allow partial acceptance and rejection of cookies for each content. It also allows the user to change his mind at all times.
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+
+*EXAMPLE of what you can do with this plugin* based on an idea from [UniversoSM](https://universosm.es/)
+    * Imagine that your visitor rejects cookies in the main banner. Which is quite possible. 
+    * So where there should be a YouTube video you can only show a static image. 
+    * Now the visitor can see a button next to the image that inform and allows to accept only the cookies to watch the video. 
+    * If the visitor makes partial consent the page will show the iframe with the video replacing the image. 
+    * In the same way it can be displayed a button next to the video to allow the visitor to reject that specific consent.
+
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload `simple-cookie-control.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+1. Upload `simple-cookie-control.php` to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Go to customizer to your own custom setup.
+4. Search into post the block `Hide/Show blocks by Cookies` into `SumaPress` category.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= What can I do with this plugin? =
 
-An answer to that question.
+Show a simple banner to inform users that your site uses cookies and blocks them until the visitor accepts. 
+Also you can show/hide conditional content depending on the acceptance of your own cookies.
 
-= What about foo bar? =
+= How do I setup this plugin? =
 
-Answer to foo bar dilemma.
+First Go to customizer and search `Simple Cookie Control` to set all setup. 
+Keep in mind that there are no more options pages outside of the customizer.
+Second, you have a Gutenberg block to show/hide conditional content depending on the acceptance of cookies. 
+Also possible using shortcodes if you prefer.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Cookie banner configurable from the WordPress customizer.
+2. Show or not a secondary banner after the primary one is hidden.
+3. Activate or not the implementation of basic internal Analytics and Google Tag Manager.
+4. With Gutenberg you can show/hide conditional content depending on the acceptance of cookies.
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+= 1.0.0 =
+* First publicly available version.
 
 == Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
+= 1.0.0 =
+* First publicly available version.
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
+== Feedback and support ==
 
-== Arbitrary section ==
+I would be happy to receive your feedback to improve this plugin.
+Please let me know through [support forums](https://wordpress.org/support/plugin/simple-cookie-control) if you like it and please be sure to [leave a review.](https://wordpress.org/support/plugin/simple-cookie-control/reviews/#new-post).
 
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
+Also you can contact me on my personal page [Pablo Cianes](https://pablocianes.com/) or even visit [Github of Simple Cookie Control](https://github.com/SumaPress/simple-cookie-control) where you can find all the development code of this plugin.
 
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+I hope it is useful for you and look forward to reading your reviews! ;-) Thanks!
