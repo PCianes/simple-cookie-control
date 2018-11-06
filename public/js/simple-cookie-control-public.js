@@ -63,12 +63,8 @@
 			$( '.cc-revoke' ).click(
 				function() {
 
-						$( "[aria-describedby*='cookieconsent:desc']" ).removeClass( 'cc-invisible' ).removeAttr( 'style' );
-						$( this ).css( 'display','none' );
-
-					if ( 'allow' === window.cookieconsent.utils.getCookie( customizerCookieOptions.cookieName ) ) {
-						  $( '.cc-allow' ).toggle();
-					}
+					$( "[aria-describedby*='cookieconsent:desc']" ).removeClass( 'cc-invisible' ).removeAttr( 'style' );
+					$( this ).css( 'display','none' );
 
 				}
 			);

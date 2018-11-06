@@ -15,28 +15,28 @@ A simple banner to inform users that your site uses cookies and blocks them unti
 
 Cookie control and customizable cookie message to comply with the EU cookie law GDPR regulations with following features:
 
-    * Cookie banner configurable from the WordPress customizer: position, styles, colors and content.
-    * Show or not a secondary banner after the primary one is hidden: which allow users see again the main banner to change their previous decision.
-    * Activate or not the implementation of basic internal Analytics to know the number of acceptances and rejections.
-    * Change the name and days to expiry of the cookie that keeps track of users choice.
-    * Activate the implementation of Google Tag Manager (Google Analytics): conditional on the acceptance of cookies.
+* Cookie banner configurable from the WordPress customizer: position, styles, colors and content.
+* Show or not a secondary banner after the primary one is hidden: which allow users see again the main banner to change their previous decision.
+* Activate or not the implementation of basic internal Analytics to know the number of acceptances and rejections.
+* Change the name and days to expiry of the cookie that keeps track of users choice.
+* Activate the implementation of Google Tag Manager (Google Analytics): conditional on the acceptance of cookies.
     
 
 Also with this plugin you can show/hide conditional content depending on the acceptance of cookies with:
 
-    * A specific block of Gutenberg: you can show/hide conditional content depending on the acceptance of cookies.
-    * Some shortocodes described in the "Advanced control" inside the WordPress Customizer. Example: [SCC_ALLOW] your content [/SCC_ALLOW]
-    * Some extra advanced options to try force automatically the blocking of some scripts, and with it the control of cookies.
+* A specific block of Gutenberg: you can show/hide conditional content depending on the acceptance of cookies.
+* Some shortocodes described in the "Advanced control" inside the WordPress Customizer. Example: [SCC_ALLOW] your content [/SCC_ALLOW]
+* Some extra advanced options to try force automatically the blocking of some scripts, and with it the control of cookies.
 
 Both with the gutenberg block and with the shortcodes this plugin allows you to show or hide content, as well as allow partial acceptance and rejection of cookies for each content. It also allows the user to change his mind at all times.
 
 
-*EXAMPLE of what you can do with this plugin* based on an idea from [UniversoSM](https://universosm.es/)
-    * Imagine that your visitor rejects cookies in the main banner. Which is quite possible. 
-    * So where there should be a YouTube video you can only show a static image. 
-    * Now the visitor can see a button next to the image that inform and allows to accept only the cookies to watch the video. 
-    * If the visitor makes partial consent the page will show the iframe with the video replacing the image. 
-    * In the same way it can be displayed a button next to the video to allow the visitor to reject that specific consent.
+**EXAMPLE of what you can do with this plugin** based on an idea from [UniversoSM](https://universosm.es/)
+* Imagine that your visitor rejects cookies in the main banner. Which is quite possible. 
+* So where there should be a YouTube video you can only show a static image. 
+* Now the visitor can see a button next to the image that inform and allows to accept only the cookies to watch the video. 
+* If the visitor makes partial consent the page will show the iframe with the video replacing the image. 
+* In the same way it can be displayed a button next to the video to allow the visitor to reject that specific consent.
 
 
 == Installation ==
@@ -71,6 +71,9 @@ Also possible using shortcodes if you prefer.
 
 = 1.0.0 =
 * First publicly available version.
+
+= 1.0.1 =
+* Do not hide the acceptance button even when they are cookies already accepted to avoid being rejected after pressing the secondary banner.
 
 == Upgrade Notice ==
 
