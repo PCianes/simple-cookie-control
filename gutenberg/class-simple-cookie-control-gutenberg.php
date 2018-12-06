@@ -81,7 +81,7 @@ class Simple_Cookie_Control_Gutenberg {
 		wp_register_script(
 			'simple-cookie-control-gutenberg-editor',
 			plugin_dir_url( __FILE__ ) . 'dist/blocks.build.js',
-			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
+			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
 			filemtime( plugin_dir_path( __FILE__ ) . 'dist/blocks.build.js' )
 		);
 

@@ -3,7 +3,7 @@ Contributors: sumapress, pablocianes
 Donate link: https://pablocianes.com/
 Tags: cookie, cookie consent, cookie law, GDPR, gutenberg cookie block
 Requires at least: 4.6
-Tested up to: 4.9
+Tested up to: 5.0
 Stable tag: trunk
 Requires PHP: 5.2.4
 License: GPLv2 or later
@@ -69,13 +69,22 @@ Also possible using shortcodes if you prefer.
 
 == Changelog ==
 
-= 1.0.0 =
-* First publicly available version.
+= 1.0.2 =
+* Compatible with WP5.0
 
 = 1.0.1 =
 * Do not hide the acceptance button even when they are cookies already accepted to avoid being rejected after pressing the secondary banner.
 
+= 1.0.0 =
+* First publicly available version.
+
 == Upgrade Notice ==
+
+= 1.0.2 =
+* Compatible with WP5.0
+
+= 1.0.1 =
+* Do not hide the acceptance button even when they are cookies already accepted to avoid being rejected after pressing the secondary banner.
 
 = 1.0.0 =
 * First publicly available version.
