@@ -20,7 +20,7 @@ Cookie control and customizable cookie message to comply with the EU cookie law 
 * Activate or not the implementation of basic internal Analytics to know the number of acceptances and rejections.
 * Change the name and days to expiry of the cookie that keeps track of users choice.
 * Activate the implementation of Google Tag Manager (Google Analytics): conditional on the acceptance of cookies.
-    
+
 
 Also with this plugin you can show/hide conditional content depending on the acceptance of cookies with:
 
@@ -32,10 +32,10 @@ Both with the gutenberg block and with the shortcodes this plugin allows you to 
 
 
 **EXAMPLE of what you can do with this plugin** based on an idea from [UniversoSM](https://universosm.es/)
-* Imagine that your visitor rejects cookies in the main banner. Which is quite possible. 
-* So where there should be a YouTube video you can only show a static image. 
-* Now the visitor can see a button next to the image that inform and allows to accept only the cookies to watch the video. 
-* If the visitor makes partial consent the page will show the iframe with the video replacing the image. 
+* Imagine that your visitor rejects cookies in the main banner. Which is quite possible.
+* So where there should be a YouTube video you can only show a static image.
+* Now the visitor can see a button next to the image that inform and allows to accept only the cookies to watch the video.
+* If the visitor makes partial consent the page will show the iframe with the video replacing the image.
 * In the same way it can be displayed a button next to the video to allow the visitor to reject that specific consent.
 
 
@@ -50,14 +50,14 @@ Both with the gutenberg block and with the shortcodes this plugin allows you to 
 
 = What can I do with this plugin? =
 
-Show a simple banner to inform users that your site uses cookies and blocks them until the visitor accepts. 
+Show a simple banner to inform users that your site uses cookies and blocks them until the visitor accepts.
 Also you can show/hide conditional content depending on the acceptance of your own cookies.
 
 = How do I setup this plugin? =
 
-First Go to customizer and search `Simple Cookie Control` to set all setup. 
+First Go to customizer and search `Simple Cookie Control` to set all setup.
 Keep in mind that there are no more options pages outside of the customizer.
-Second, you have a Gutenberg block to show/hide conditional content depending on the acceptance of cookies. 
+Second, you have a Gutenberg block to show/hide conditional content depending on the acceptance of cookies.
 Also possible using shortcodes if you prefer.
 
 == Screenshots ==
@@ -68,6 +68,9 @@ Also possible using shortcodes if you prefer.
 4. With Gutenberg you can show/hide conditional content depending on the acceptance of cookies.
 
 == Changelog ==
+
+= 1.0.3 =
+* Delete bug notice about undefined index
 
 = 1.0.2 =
 * Compatible with WP5.0

@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Simple Cookie Control
  * Description:       Inform users that your site uses cookies and blocks them until the visitor accepts.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            SumaPress
  * Author URI:        https://sumapress.com
  * License:           GPL-2.0+
@@ -48,7 +48,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'SIMPLE_COOKIE_CONTROL_VERSION', '1.0.2' );
+define( 'SIMPLE_COOKIE_CONTROL_VERSION', '1.0.3' );
 
 /**
  * The code that runs only in dev mode
