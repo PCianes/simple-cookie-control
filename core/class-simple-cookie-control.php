@@ -205,7 +205,7 @@ class Simple_Cookie_Control {
 			$this->loader->add_action( 'script_loader_tag', $plugin_public, 'add_block_attribute_to_scripts', 9999, 3 );
 		}
 
-		if ( 'always' === $plugin_options['googleManager'] || ( 'conditional' === $plugin_options['googleManager'] && 'allow' === $_COOKIE[ $plugin_options['cookieName'] ] ) ) {
+		if ( 'always' === $plugin_options['googleManager'] || ( 'conditional' === $plugin_options['googleManager'] && isset( $_COOKIE[ $plugin_options['cookieName'] ] ) && 'allow' === $_COOKIE[ $plugin_options['cookieName'] ] ) ) {
 			$this->loader->add_action( 'wp_head', $plugin_public, 'enqueue_head_google_scripts', 1 );
 			$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_body_google_scripts', 1 );
 		}
