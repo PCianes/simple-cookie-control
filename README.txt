@@ -3,7 +3,7 @@ Contributors: sumapress, pablocianes
 Donate link: https://pablocianes.com/
 Tags: cookie, cookie consent, cookie law, GDPR, gutenberg cookie block
 Requires at least: 4.6
-Tested up to: 5.0
+Tested up to: 5.1
 Stable tag: trunk
 Requires PHP: 5.2.4
 License: GPLv2 or later
